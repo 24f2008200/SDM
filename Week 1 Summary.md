@@ -130,9 +130,7 @@ $$
 
 where
 
-$$
-\mathbf 1[\text{condition}]
-=
+$$ \mathbf 1[\text{condition}] =
 \begin{cases}
 1,&\text{condition true}\\
 0,&\text{otherwise}
@@ -211,9 +209,7 @@ At each round:
 
 So:
 
-$$
-C_{t+1}
-=
+$$ C_{t+1}=
 \{k\in C_t:x_{tk}=y_t\}
 $$
 
@@ -465,8 +461,7 @@ This difference is called **regret**.
 Define:
 
 $$
-M_A(T)
-=
+M_A(T)=
 \sum_{t=1}^{T}
 \mathbf1[\hat y_t\neq y_t]
 $$
@@ -476,8 +471,7 @@ where \(M_A(T)\) is the number of mistakes made by the algorithm.
 For expert \(k\):
 
 $$
-M_k(T)
-=
+M_k(T)=
 \sum_{t=1}^{T}
 \mathbf1[x_{tk}\neq y_t]
 $$
@@ -485,8 +479,7 @@ $$
 The best expert in hindsight is:
 
 $$
-M^*(T)
-=
+M^*(T)=
 \min_{k\in\{1,\ldots,D\}}M_k(T)
 $$
 
@@ -494,8 +487,7 @@ Therefore:
 
 $$
 \boxed{
-R_A(T)
-=
+R_A(T)=
 M_A(T)-M^*(T)
 }
 $$
@@ -514,10 +506,7 @@ Suppose after 10,000 rounds:
 Then:
 
 $$
-R_A(10000)
-=
-4000-400
-=
+R_A(10000)=4000-400=
 3600
 $$
 
@@ -536,8 +525,7 @@ This is a subtle but **very exam-worthy** point.
 The best expert is:
 
 $$
-k^*
-=
+k^*=
 \arg\min_k M_k(T)
 $$
 
@@ -753,8 +741,7 @@ then:
 
 $$
 \boxed{
-w_{t+1,k}
-=
+w_{t+1,k}=
 (1-\epsilon)w_{t,k}
 }
 $$
@@ -935,8 +922,7 @@ Therefore:
 
 $$
 \boxed{
-w_T^*
-=
+w_T^*=
 (1-\epsilon)^{M^*}
 }
 $$
@@ -1193,8 +1179,7 @@ $$
 so:
 
 $$
-R_A(T)
-=
+R_A(T)=
 T-M^*
 \geq
 \frac T2
