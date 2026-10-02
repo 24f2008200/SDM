@@ -82,29 +82,29 @@ At round \(t\):
 
 Let
 
-\[
+$$
 x_t=(x_{t1},x_{t2},\ldots,x_{tD})
-\]
+$$
 
 where
 
-\[
+$$
 x_{tk}\in\{0,1\}
-\]
+$$
 
 is the prediction of expert \(k\) at time \(t\).
 
 The algorithm produces
 
-\[
+$$
 \hat y_t\in\{0,1\}
-\]
+$$
 
 and the actual outcome is
 
-\[
+$$
 y_t\in\{0,1\}.
-\]
+$$
 
 The transcript explicitly represents the experts' advice as a binary vector \(x_t\in\{0,1\}^D\). L2-7
 
@@ -114,30 +114,30 @@ The transcript explicitly represents the experts' advice as a binary vector \(x_
 
 The algorithm makes a mistake whenever
 
-\[
+$$
 \boxed{\hat y_t\neq y_t}
-\]
+$$
 
 Therefore the total number of mistakes over \(T\) rounds is
 
-\[
+$$
 \boxed{
 M_A(T)=
 \sum_{t=1}^{T}
 \mathbf 1[\hat y_t\neq y_t]
 }
-\]
+$$
 
 where
 
-\[
+$$
 \mathbf 1[\text{condition}]
 =
 \begin{cases}
 1,&\text{condition true}\\
 0,&\text{otherwise}
 \end{cases}
-\]
+$$
 
 ### Important interpretation
 
@@ -162,9 +162,9 @@ This expert is called the **stock-market guru**.
 
 The algorithm knows:
 
-\[
+$$
 \boxed{\text{There exists a perfect expert}}
-\]
+$$
 
 but **does not know which expert it is**. L2-7
 
@@ -185,9 +185,9 @@ Suppose:
 
 Then
 
-\[
+$$
 \hat y_t=1
-\]
+$$
 
 because the majority says 1.
 
@@ -197,9 +197,9 @@ After the actual result is revealed, eliminate experts who were wrong.
 
 Initially:
 
-\[
+$$
 C_1=\{1,2,\ldots,D\}
-\]
+$$
 
 At each round:
 
@@ -211,11 +211,11 @@ At each round:
 
 So:
 
-\[
+$$
 C_{t+1}
 =
 \{k\in C_t:x_{tk}=y_t\}
-\]
+$$
 
 The lecture calls this the **majority algorithm**. L2-7
 
@@ -231,45 +231,45 @@ Therefore at least half of the current experts are eliminated.
 
 So:
 
-\[
+$$
 |C_{t+1}|
 \leq
 \frac{|C_t|}{2}
-\]
+$$
 
 After \(m\) mistakes:
 
-\[
+$$
 |C|
 \leq
 \frac{D}{2^m}
-\]
+$$
 
 Eventually only one expert remains.
 
 We need
 
-\[
+$$
 \frac{D}{2^m}<1
-\]
+$$
 
 which gives approximately
 
-\[
+$$
 2^m>D
-\]
+$$
 
 and hence
 
-\[
+$$
 m=O(\log D)
-\]
+$$
 
 More precisely, the lecture gives the worst-case mistake bound as
 
-\[
+$$
 \boxed{M_A\leq\lceil\log_2D\rceil}
-\]
+$$
 
 under the perfect-expert assumption. L2-7
 
@@ -281,7 +281,7 @@ This is a very important exam intuition.
 
 Every mistake cuts the candidate population approximately in half:
 
-\[
+$$
 D
 \rightarrow
 \frac D2
@@ -290,45 +290,45 @@ D
 \rightarrow
 \frac D8
 \rightarrow\cdots
-\]
+$$
 
 After \(m\) mistakes:
 
-\[
+$$
 \frac{D}{2^m}
-\]
+$$
 
 Set this equal to 1:
 
-\[
+$$
 \frac{D}{2^m}=1
-\]
+$$
 
 Therefore:
 
-\[
+$$
 2^m=D
-\]
+$$
 
 so
 
-\[
+$$
 \boxed{m=\log_2D}
-\]
+$$
 
 ### Example
 
 If
 
-\[
+$$
 D=1,000,000
-\]
+$$
 
 then
 
-\[
+$$
 \log_2(1,000,000)\approx19.93
-\]
+$$
 
 so at most about **20 mistakes** are required in the worst case.
 
@@ -348,15 +348,15 @@ To answer this, we need a **lower bound**.
 
 An upper bound says:
 
-\[
+$$
 \text{This algorithm makes at most }f(D)\text{ mistakes.}
-\]
+$$
 
 A lower bound says:
 
-\[
+$$
 \text{Every possible algorithm can be forced to make at least }f(D)\text{ mistakes.}
-\]
+$$
 
 The latter is much stronger.
 
@@ -375,15 +375,15 @@ but with one restriction:
 
 The adversary can arrange approximately:
 
-\[
+$$
 D/2 \text{ experts say 0}
-\]
+$$
 
 and
 
-\[
+$$
 D/2 \text{ experts say 1}
-\]
+$$
 
 Whatever the algorithm predicts, the adversary chooses the opposite truth.
 
@@ -395,34 +395,34 @@ Therefore the candidate set shrinks by at most half.
 
 The adversary can repeat this approximately
 
-\[
+$$
 \log_2D
-\]
+$$
 
 times.
 
 Therefore:
 
-\[
+$$
 \boxed{
 \text{Any algorithm can be forced to make }
 \Omega(\log D)\text{ mistakes}
 }
-\]
+$$
 
 The majority algorithm already achieves
 
-\[
+$$
 O(\log D)
-\]
+$$
 
 so we obtain:
 
-\[
+$$
 \boxed{
 \Theta(\log D)
 }
-\]
+$$
 
 This establishes optimality in this particular perfect-expert setting. L2-7
 
@@ -464,41 +464,41 @@ This difference is called **regret**.
 
 Define:
 
-\[
+$$
 M_A(T)
 =
 \sum_{t=1}^{T}
 \mathbf1[\hat y_t\neq y_t]
-\]
+$$
 
 where \(M_A(T)\) is the number of mistakes made by the algorithm.
 
 For expert \(k\):
 
-\[
+$$
 M_k(T)
 =
 \sum_{t=1}^{T}
 \mathbf1[x_{tk}\neq y_t]
-\]
+$$
 
 The best expert in hindsight is:
 
-\[
+$$
 M^*(T)
 =
 \min_{k\in\{1,\ldots,D\}}M_k(T)
-\]
+$$
 
 Therefore:
 
-\[
+$$
 \boxed{
 R_A(T)
 =
 M_A(T)-M^*(T)
 }
-\]
+$$
 
 This is **regret**. L2-7
 
@@ -513,13 +513,13 @@ Suppose after 10,000 rounds:
 
 Then:
 
-\[
+$$
 R_A(10000)
 =
 4000-400
 =
 3600
-\]
+$$
 
 Interpretation:
 
@@ -535,11 +535,11 @@ This is a subtle but **very exam-worthy** point.
 
 The best expert is:
 
-\[
+$$
 k^*
 =
 \arg\min_k M_k(T)
-\]
+$$
 
 after observing all \(T\) rounds.
 
@@ -555,9 +555,9 @@ For example:
 
 The algorithm is always compared against:
 
-\[
+$$
 \boxed{\text{best expert in hindsight}}
-\]
+$$
 
 not necessarily one fixed expert known beforehand. L2-7
 
@@ -567,28 +567,28 @@ not necessarily one fixed expert known beforehand. L2-7
 
 We don't necessarily demand:
 
-\[
+$$
 R_A(T)\rightarrow0
-\]
+$$
 
 because total regret can naturally increase as more rounds are played.
 
 Instead we ask for **average regret** to vanish:
 
-\[
+$$
 \boxed{
 \frac{R_A(T)}{T}\rightarrow0
 \quad\text{as }T\rightarrow\infty
 }
-\]
+$$
 
 This is called **sublinear regret**.
 
 Equivalently:
 
-\[
+$$
 R_A(T)=o(T)
-\]
+$$
 
 This means the regret grows slower than linearly.
 
@@ -608,13 +608,13 @@ The lecture explicitly identifies vanishing per-round regret and sublinear regre
 
 ### Key equivalence
 
-\[
+$$
 \boxed{
 R(T)=o(T)
 \iff
 \frac{R(T)}T\rightarrow0
 }
-\]
+$$
 
 ---
 
@@ -624,30 +624,30 @@ Suppose a perfect expert exists.
 
 Then:
 
-\[
+$$
 M^*(T)=0
-\]
+$$
 
 Therefore:
 
-\[
+$$
 R_A(T)=M_A(T)
-\]
+$$
 
 For the majority algorithm:
 
-\[
+$$
 R_A(T)\leq\log_2D
-\]
+$$
 
 Thus:
 
-\[
+$$
 \frac{R_A(T)}T
 \leq
 \frac{\log_2D}{T}
 \rightarrow0
-\]
+$$
 
 So the old majority algorithm is indeed a **zero-average-regret algorithm** in the special guru setting. L2-7
 
@@ -669,23 +669,23 @@ This leads naturally to **weights**.
 
 Each expert gets a weight:
 
-\[
+$$
 w_{t,k}
-\]
+$$
 
 Initially:
 
-\[
+$$
 \boxed{w_{1,k}=1}
-\]
+$$
 
 for every expert \(k\).
 
 So initially:
 
-\[
+$$
 W_1=\sum_{k=1}^{D}w_{1,k}=D
-\]
+$$
 
 The lecture introduces this weighted approach precisely because experts cannot safely be eliminated. L2-7
 
@@ -697,29 +697,29 @@ At round \(t\):
 
 ### Step 1: Receive advice
 
-\[
+$$
 x_t=(x_{t1},...,x_{tD})
-\]
+$$
 
 ### Step 2: Calculate weighted support
 
 Weight supporting prediction 1:
 
-\[
+$$
 S_1=
 \sum_{k:x_{tk}=1}w_{t,k}
-\]
+$$
 
 Weight supporting prediction 0:
 
-\[
+$$
 S_0=
 \sum_{k:x_{tk}=0}w_{t,k}
-\]
+$$
 
 ### Step 3: Predict weighted majority
 
-\[
+$$
 \boxed{
 \hat y_t=
 \begin{cases}
@@ -727,7 +727,7 @@ S_0=
 0,&S_0>S_1
 \end{cases}
 }
-\]
+$$
 
 Ties can be broken arbitrarily. L2-7
 
@@ -737,41 +737,41 @@ Ties can be broken arbitrarily. L2-7
 
 Let
 
-\[
+$$
 0<\epsilon<1
-\]
+$$
 
 be the weight reduction parameter.
 
 If expert \(k\) makes a mistake:
 
-\[
+$$
 x_{tk}\neq y_t
-\]
+$$
 
 then:
 
-\[
+$$
 \boxed{
 w_{t+1,k}
 =
 (1-\epsilon)w_{t,k}
 }
-\]
+$$
 
 If expert \(k\) is correct:
 
-\[
+$$
 x_{tk}=y_t
-\]
+$$
 
 then:
 
-\[
+$$
 \boxed{
 w_{t+1,k}=w_{t,k}
 }
-\]
+$$
 
 So:
 
@@ -785,31 +785,31 @@ The lecture gives exactly this update rule and calls the method the **Weighted M
 
 # 22. Meaning of \(\epsilon\)
 
-\[
+$$
 \epsilon
-\]
+$$
 
 controls how aggressively we punish a wrong expert.
 
 Example:
 
-\[
+$$
 \epsilon=0.1
-\]
+$$
 
 Then:
 
-\[
+$$
 w_{t+1,k}=0.9w_{t,k}
-\]
+$$
 
 So the expert loses **10% of its weight** whenever it makes a mistake.
 
 ### Extreme cases
 
-\[
+$$
 \epsilon=0
-\]
+$$
 
 means:
 
@@ -819,15 +819,15 @@ Not useful.
 
 Whereas
 
-\[
+$$
 \epsilon=1
-\]
+$$
 
 means:
 
-\[
+$$
 w_{t+1,k}=0
-\]
+$$
 
 for a mistaken expert.
 
@@ -835,9 +835,9 @@ That reduces Weighted Majority to the earlier **elimination/majority algorithm**
 
 This connection is very important:
 
-\[
+$$
 \boxed{\epsilon=1\Rightarrow\text{Weighted Majority becomes Majority/Elimination}}
-\]
+$$
 
 ---
 
@@ -847,19 +847,19 @@ The lecturer then analyzes Weighted Majority using a **potential function**.
 
 Define:
 
-\[
+$$
 \boxed{
 \Phi_t=\sum_{k=1}^{D}w_{t,k}
 }
-\]
+$$
 
 This is simply the **total weight of all experts**.
 
 Initially:
 
-\[
+$$
 \boxed{\Phi_1=D}
-\]
+$$
 
 because every expert begins with weight 1. L2-7
 
@@ -873,22 +873,22 @@ The algorithm followed the **weighted majority**.
 
 Therefore the experts who were wrong had at least half of the total weight:
 
-\[
+$$
 \sum_{k:x_{tk}\neq y_t}w_{t,k}
 \geq
 \frac{\Phi_t}{2}
-\]
+$$
 
 Those experts are penalized by \(1-\epsilon\).
 
 Therefore:
 
-\[
+$$
 \Phi_{t+1}
 \leq
 \Phi_t
 \left(1-\frac{\epsilon}{2}\right)
-\]
+$$
 
 This is one of the most important derivations in the lecture. L2-7
 
@@ -898,14 +898,14 @@ This is one of the most important derivations in the lecture. L2-7
 
 If the algorithm makes \(M\) mistakes, repeatedly applying the previous result gives:
 
-\[
+$$
 \boxed{
 \Phi_T
 \leq
 D
 \left(1-\frac{\epsilon}{2}\right)^M
 }
-\]
+$$
 
 This connects:
 
@@ -921,9 +921,9 @@ The lecture derives this potential upper bound explicitly. L2-7
 
 Let the best expert make
 
-\[
+$$
 M^*
-\]
+$$
 
 mistakes.
 
@@ -933,27 +933,27 @@ Every time it makes a mistake, its weight gets multiplied by \(1-\epsilon\).
 
 Therefore:
 
-\[
+$$
 \boxed{
 w_T^*
 =
 (1-\epsilon)^{M^*}
 }
-\]
+$$
 
 Since total weight contains the best expert:
 
-\[
+$$
 \Phi_T\geq w_T^*
-\]
+$$
 
 so:
 
-\[
+$$
 \boxed{
 \Phi_T\geq(1-\epsilon)^{M^*}
 }
-\]
+$$
 
 The lecturer calls this the second side of the "sandwich". L2-7
 
@@ -963,7 +963,7 @@ The lecturer calls this the second side of the "sandwich". L2-7
 
 Putting the two bounds together:
 
-\[
+$$
 \boxed{
 (1-\epsilon)^{M^*}
 \leq
@@ -971,7 +971,7 @@ Putting the two bounds together:
 \leq
 D\left(1-\frac{\epsilon}{2}\right)^M
 }
-\]
+$$
 
 This is the heart of the Weighted Majority analysis.
 
@@ -988,29 +988,29 @@ It gives us a bridge between:
 
 The lecturer introduces:
 
-\[
+$$
 \boxed{e^x\geq1+x}
-\]
+$$
 
 Therefore:
 
-\[
+$$
 e^{-x}\geq1-x
-\]
+$$
 
 and taking logarithms:
 
-\[
+$$
 \boxed{\log(1-x)\leq-x}
-\]
+$$
 
 Another inequality used is:
 
-\[
+$$
 \boxed{
 \log(1-x)\geq-x-x^2
 }
-\]
+$$
 
 for the range stated in the lecture, \(0\leq x\leq\frac12\). L2-7
 
@@ -1018,15 +1018,15 @@ for the range stated in the lecture, \(0\leq x\leq\frac12\). L2-7
 
 Remember the direction:
 
-\[
+$$
 \boxed{\log(1-x)\leq -x}
-\]
+$$
 
 and, for small \(x\),
 
-\[
+$$
 \boxed{\log(1-x)\approx-x-\frac{x^2}{2}}
-\]
+$$
 
 ---
 
@@ -1034,7 +1034,7 @@ and, for small \(x\),
 
 After the algebra, the lecture obtains:
 
-\[
+$$
 \boxed{
 M-M^*
 \leq
@@ -1044,11 +1044,11 @@ M^*
 +
 2\epsilon M^*
 }
-\]
+$$
 
 or, in regret notation,
 
-\[
+$$
 \boxed{
 R_{WM}(T)
 \leq
@@ -1058,7 +1058,7 @@ M^*
 +
 2\epsilon M^*
 }
-\]
+$$
 
 The transcript explicitly identifies \(M-M^*\) as regret and gives this resulting bound. L2-7
 
@@ -1066,9 +1066,9 @@ The transcript explicitly identifies \(M-M^*\) as regret and gives this resultin
 
 The bound contains a term involving
 
-\[
+$$
 M^*
-\]
+$$
 
 which can itself grow linearly with \(T\).
 
@@ -1102,49 +1102,49 @@ Take only two experts:
 
 Always predicts:
 
-\[
+$$
 1
-\]
+$$
 
 ### Expert 2
 
 Always predicts:
 
-\[
+$$
 0
-\]
+$$
 
 Now imagine an adversary that observes the algorithm's prediction and always gives the opposite truth.
 
 If the algorithm predicts:
 
-\[
+$$
 1
-\]
+$$
 
 the truth becomes:
 
-\[
+$$
 0
-\]
+$$
 
 If the algorithm predicts:
 
-\[
+$$
 0
-\]
+$$
 
 the truth becomes:
 
-\[
+$$
 1
-\]
+$$
 
 Therefore:
 
-\[
+$$
 \boxed{M_A(T)=T}
-\]
+$$
 
 The algorithm makes a mistake **every round**. L2-7
 
@@ -1156,65 +1156,65 @@ Let expert 1 make \(L\) mistakes.
 
 Since expert 1 always predicts 1, expert 2 always predicts 0, and the truth is binary:
 
-\[
+$$
 M_1=L
-\]
+$$
 
 and
 
-\[
+$$
 M_2=T-L
-\]
+$$
 
 Therefore:
 
-\[
+$$
 M_1+M_2=T
-\]
+$$
 
 Hence:
 
-\[
+$$
 \min(M_1,M_2)\leq\frac T2
-\]
+$$
 
 Therefore:
 
-\[
+$$
 M^*\leq\frac T2
-\]
+$$
 
 But the algorithm has
 
-\[
+$$
 M_A=T
-\]
+$$
 
 so:
 
-\[
+$$
 R_A(T)
 =
 T-M^*
 \geq
 \frac T2
-\]
+$$
 
 Thus:
 
-\[
+$$
 \boxed{
 \frac{R_A(T)}T\geq\frac12
 }
-\]
+$$
 
 and therefore:
 
-\[
+$$
 \boxed{
 \frac{R_A(T)}T\nrightarrow0
 }
-\]
+$$
 
 So **no algorithm** can guarantee sublinear regret against this fully adaptive adversary. L2-7
 
@@ -1260,9 +1260,9 @@ An **oblivious adversary** must choose the entire sequence of outcomes **before 
 
 So:
 
-\[
+$$
 y_1,y_2,\ldots,y_T
-\]
+$$
 
 is fixed in advance.
 
@@ -1270,30 +1270,30 @@ The adversary may know the algorithm, but it cannot decide \(y_t\) after seeing 
 
 ### Adaptive adversary
 
-\[
+$$
 \hat y_t
 \rightarrow
 \boxed{\text{adversary sees it}}
 \rightarrow
 y_t
-\]
+$$
 
 ### Oblivious adversary
 
 Before game:
 
-\[
+$$
 \boxed{
 (y_1,y_2,\ldots,y_T)
 \text{ fixed}
 }
-\]
+$$
 
 Then game runs:
 
-\[
+$$
 y_1,y_2,\ldots,y_T
-\]
+$$
 
 This distinction is likely to become very important in the following lectures. The transcript explicitly ends by asking how this restriction can be exploited to obtain better algorithms and potentially sublinear regret. L2-7
 
@@ -1303,123 +1303,123 @@ This distinction is likely to become very important in the following lectures. T
 
 This is the **most useful revision chain** to memorize:
 
-\[
+$$
 \boxed{
 \text{Online Learning}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Learning from Expert Advice}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Perfect Expert Assumption}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Majority Algorithm}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 O(\log D)\text{ mistakes}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Optimal via lower bound}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{But perfect expert is unrealistic}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Cannot eliminate experts}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Weighted Majority}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Compare against best expert}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Regret}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 R(T)/T\rightarrow0
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Fully adaptive adversary makes this impossible}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Restrict adversary}
 }
-\]
+$$
 
 ↓
 
-\[
+$$
 \boxed{
 \text{Oblivious Adversary}
 }
-\]
+$$
 
 That is the conceptual backbone of Week 1.
 
@@ -1498,9 +1498,9 @@ These are the places where an MCQ can quietly set a trap.
 
 **Mistakes:**
 
-\[
+$$
 M_A(T)
-\]
+$$
 
 asks:
 
@@ -1508,9 +1508,9 @@ asks:
 
 **Regret:**
 
-\[
+$$
 R_A(T)=M_A(T)-M^*(T)
-\]
+$$
 
 asks:
 
@@ -1522,31 +1522,31 @@ asks:
 
 **Upper bound:**
 
-\[
+$$
 M_A(T)\leq f(T)
-\]
+$$
 
 says a particular algorithm cannot do worse than \(f(T)\).
 
 **Lower bound:**
 
-\[
+$$
 M_A(T)\geq f(T)
-\]
+$$
 
 under an adversarial construction says an algorithm cannot universally do better than \(f(T)\).
 
 For the guru setting:
 
-\[
+$$
 \boxed{\text{Upper bound}=\Theta(\log D)}
-\]
+$$
 
 and
 
-\[
+$$
 \boxed{\text{Lower bound}=\Theta(\log D)}
-\]
+$$
 
 therefore the majority algorithm is optimal in that setting.
 
@@ -1558,15 +1558,15 @@ These are **not the same assumption**.
 
 **Perfect expert:**
 
-\[
+$$
 M^*=0
-\]
+$$
 
 **Best expert:**
 
-\[
+$$
 M^* \geq0
-\]
+$$
 
 The best expert may make many mistakes.
 
@@ -1590,21 +1590,21 @@ This distinction is what motivates regret.
 
 **Adaptive:**
 
-\[
+$$
 \boxed{\text{Adversary can react to current algorithm prediction}}
-\]
+$$
 
 **Oblivious:**
 
-\[
+$$
 \boxed{\text{Outcome sequence fixed before the game}}
-\]
+$$
 
 The fully adaptive adversary is powerful enough to force:
 
-\[
+$$
 R(T)\geq T/2
-\]
+$$
 
 in the two-expert construction.
 
@@ -1619,22 +1619,22 @@ If you have only five minutes before entering the exam hall, remember these **10
 3. **Perfect expert assumption → Majority Algorithm.**
 4. **Every mistake eliminates at least half the candidate experts.**
 5. Therefore:
-   \[
+   $$
    \boxed{M\leq\lceil\log_2D\rceil}
-   \]
+   $$
 6. Without a perfect expert, don't eliminate experts. **Weight them.**
 7. **Regret = algorithm mistakes − best expert's mistakes.**
-   \[
+   $$
    \boxed{R=M-M^*}
-   \]
+   $$
 8. Desired:
-   \[
+   $$
    \boxed{R(T)/T\to0}
-   \]
+   $$
    or
-   \[
+   $$
    \boxed{R(T)=o(T)}
-   \]
+   $$
 9. **Weighted Majority:** wrong expert's weight gets multiplied by \(1-\epsilon\).
 10. A fully adaptive adversary can force linear regret, motivating the **oblivious adversary** model.
 
