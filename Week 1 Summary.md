@@ -72,12 +72,12 @@ The Week 1 lectures concentrate on **online learning / full-information learning
 
 Suppose there are **D experts**.
 
-At round \(t\):
+At round $t$:
 
-- Expert \(1,\ldots,D\) gives advice.
+- Expert $1,\ldots,D$ gives advice.
 - Algorithm observes all advice.
 - Algorithm predicts.
-- Actual outcome \(y_t\) is revealed.
+- Actual outcome $y_t$ is revealed.
 - Algorithm updates its strategy.
 
 Let
@@ -92,7 +92,7 @@ $$
 x_{tk}\in\{0,1\}
 $$
 
-is the prediction of expert \(k\) at time \(t\).
+is the prediction of expert $k$ at time $t$.
 
 The algorithm produces
 
@@ -106,7 +106,7 @@ $$
 y_t\in\{0,1\}.
 $$
 
-The transcript explicitly represents the experts' advice as a binary vector \(x_t\in\{0,1\}^D\). L2-7
+The transcript explicitly represents the experts' advice as a binary vector $x_t\in\{0,1\}^D$. L2-7
 
 ---
 
@@ -118,7 +118,7 @@ $$
 \boxed{\hat y_t\neq y_t}
 $$
 
-Therefore the total number of mistakes over \(T\) rounds is
+Therefore the total number of mistakes over $T$ rounds is
 
 $$
 \boxed{
@@ -154,7 +154,7 @@ This binary mistake/loss formulation is the foundation for everything that follo
 
 Initially the lecturer assumes:
 
-> Among the \(D\) experts, **at least one expert is always correct**.
+> Among the $D$ experts, **at least one expert is always correct**.
 
 This expert is called the **stock-market guru**.
 
@@ -201,10 +201,10 @@ $$
 
 At each round:
 
-1. Consider the current candidate set \(C_t\).
+1. Consider the current candidate set $C_t$.
 2. Take the majority prediction.
 3. Make that prediction.
-4. Observe \(y_t\).
+4. Observe $y_t$.
 5. Remove all experts who made a mistake.
 
 So:
@@ -233,7 +233,7 @@ $$
 \frac{|C_t|}{2}
 $$
 
-After \(m\) mistakes:
+After $m$ mistakes:
 
 $$
 |C|
@@ -288,7 +288,7 @@ D
 \rightarrow\cdots
 $$
 
-After \(m\) mistakes:
+After $m$ mistakes:
 
 $$
 \frac{D}{2^m}
@@ -338,7 +338,7 @@ That is the beautiful part of the argument:
 
 Now the lecture asks a deeper question:
 
-> Could another algorithm make fewer than \(O(\log D)\) mistakes?
+> Could another algorithm make fewer than $O(\log D)$ mistakes?
 
 To answer this, we need a **lower bound**.
 
@@ -466,9 +466,9 @@ M_A(T)=
 \mathbf1[\hat y_t\neq y_t]
 $$
 
-where \(M_A(T)\) is the number of mistakes made by the algorithm.
+where $M_A(T)$ is the number of mistakes made by the algorithm.
 
-For expert \(k\):
+For expert $k$:
 
 $$
 M_k(T)=
@@ -529,17 +529,17 @@ k^*=
 \arg\min_k M_k(T)
 $$
 
-after observing all \(T\) rounds.
+after observing all $T$ rounds.
 
-So the identity of the best expert can change when \(T\) changes.
+So the identity of the best expert can change when $T$ changes.
 
 For example:
 
 | Time | Best expert so far |
 |---|---|
-| \(T=100\) | Expert 52 |
-| \(T=10,000\) | Expert 48 |
-| \(T=20,000\) | Expert 17 |
+| $T=100$ | Expert 52 |
+| $T=10,000$ | Expert 48 |
+| $T=20,000$ | Expert 17 |
 
 The algorithm is always compared against:
 
@@ -588,11 +588,11 @@ The lecture explicitly identifies vanishing per-round regret and sublinear regre
 
 | Regret | Average regret | Good? |
 |---|---:|---|
-| \(R(T)=T\) | \(1\) | ❌ |
-| \(R(T)=T/2\) | \(1/2\) | ❌ |
-| \(R(T)=\sqrt T\) | \(1/\sqrt T\to0\) | ✅ |
-| \(R(T)=\log T\) | \(\log T/T\to0\) | ✅ |
-| \(R(T)=100\) | \(100/T\to0\) | ✅ |
+| $R(T)=T$ | $1$ | ❌ |
+| $R(T)=T/2$ | $1/2$ | ❌ |
+| $R(T)=\sqrt T$ | $1/\sqrt T\to0$ | ✅ |
+| $R(T)=\log T$ | $\log T/T\to0$ | ✅ |
+| $R(T)=100$ | $100/T\to0$ | ✅ |
 
 ### Key equivalence
 
@@ -667,7 +667,7 @@ $$
 \boxed{w_{1,k}=1}
 $$
 
-for every expert \(k\).
+for every expert $k$.
 
 So initially:
 
@@ -681,7 +681,7 @@ The lecture introduces this weighted approach precisely because experts cannot s
 
 # 20. Weighted Majority Algorithm
 
-At round \(t\):
+At round $t$:
 
 ### Step 1: Receive advice
 
@@ -731,7 +731,7 @@ $$
 
 be the weight reduction parameter.
 
-If expert \(k\) makes a mistake:
+If expert $k$ makes a mistake:
 
 $$
 x_{tk}\neq y_t
@@ -746,7 +746,7 @@ w_{t+1,k}=
 }
 $$
 
-If expert \(k\) is correct:
+If expert $k$ is correct:
 
 $$
 x_{tk}=y_t
@@ -770,7 +770,7 @@ The lecture gives exactly this update rule and calls the method the **Weighted M
 
 ---
 
-# 22. Meaning of \(\epsilon\)
+# 22. Meaning of $\epsilon$
 
 $$
 \epsilon
@@ -866,7 +866,7 @@ $$
 \frac{\Phi_t}{2}
 $$
 
-Those experts are penalized by \(1-\epsilon\).
+Those experts are penalized by $1-\epsilon$.
 
 Therefore:
 
@@ -881,9 +881,9 @@ This is one of the most important derivations in the lecture. L2-7
 
 ---
 
-# 25. After \(M\) Algorithm Mistakes
+# 25. After $M$ Algorithm Mistakes
 
-If the algorithm makes \(M\) mistakes, repeatedly applying the previous result gives:
+If the algorithm makes $M$ mistakes, repeatedly applying the previous result gives:
 
 $$
 \boxed{
@@ -896,9 +896,9 @@ $$
 
 This connects:
 
-- number of experts \(D\)
-- learning/penalty parameter \(\epsilon\)
-- algorithm mistakes \(M\)
+- number of experts $D$
+- learning/penalty parameter $\epsilon$
+- algorithm mistakes $M$
 
 The lecture derives this potential upper bound explicitly. L2-7
 
@@ -916,7 +916,7 @@ mistakes.
 
 That expert starts with weight 1.
 
-Every time it makes a mistake, its weight gets multiplied by \(1-\epsilon\).
+Every time it makes a mistake, its weight gets multiplied by $1-\epsilon$.
 
 Therefore:
 
@@ -963,10 +963,10 @@ This is the heart of the Weighted Majority analysis.
 
 It gives us a bridge between:
 
-- \(M\): algorithm mistakes
-- \(M^*\): best expert's mistakes
-- \(D\): number of experts
-- \(\epsilon\): penalty parameter
+- $M$: algorithm mistakes
+- $M^*$: best expert's mistakes
+- $D$: number of experts
+- $\epsilon$: penalty parameter
 
 ---
 
@@ -998,7 +998,7 @@ $$
 }
 $$
 
-for the range stated in the lecture, \(0\leq x\leq\frac12\). L2-7
+for the range stated in the lecture, $0\leq x\leq\frac12$. L2-7
 
 ### Exam tip
 
@@ -1008,7 +1008,7 @@ $$
 \boxed{\log(1-x)\leq -x}
 $$
 
-and, for small \(x\),
+and, for small $x$,
 
 $$
 \boxed{\log(1-x)\approx-x-\frac{x^2}{2}}
@@ -1046,7 +1046,7 @@ M^*
 }
 $$
 
-The transcript explicitly identifies \(M-M^*\) as regret and gives this resulting bound. L2-7
+The transcript explicitly identifies $M-M^*$ as regret and gives this resulting bound. L2-7
 
 ### Important interpretation
 
@@ -1056,7 +1056,7 @@ $$
 M^*
 $$
 
-which can itself grow linearly with \(T\).
+which can itself grow linearly with $T$.
 
 Therefore this particular bound **does not establish zero-average/sublinear regret**.
 
@@ -1138,7 +1138,7 @@ The algorithm makes a mistake **every round**. L2-7
 
 # 32. Why the Best Expert Is Still Not Too Bad
 
-Let expert 1 make \(L\) mistakes.
+Let expert 1 make $L$ mistakes.
 
 Since expert 1 always predicts 1, expert 2 always predicts 0, and the truth is binary:
 
@@ -1251,7 +1251,7 @@ $$
 
 is fixed in advance.
 
-The adversary may know the algorithm, but it cannot decide \(y_t\) after seeing the algorithm's current prediction. L2-7
+The adversary may know the algorithm, but it cannot decide $y_t$ after seeing the algorithm's current prediction. L2-7
 
 ### Adaptive adversary
 
@@ -1417,24 +1417,24 @@ That is the conceptual backbone of Week 1.
 | 1 | Online learning | Sequential decision-making with feedback |
 | 2 | Expert advice | Multiple experts provide predictions each round |
 | 3 | Full information | We see the actual outcome and can evaluate all experts |
-| 4 | Mistake | \(\hat y_t\neq y_t\) |
+| 4 | Mistake | $\hat y_t\neq y_t$ |
 | 5 | Perfect expert | At least one expert is always correct |
 | 6 | Majority algorithm | Follow majority of currently consistent experts |
 | 7 | Mistake reduction | Every mistake eliminates at least half the candidates |
-| 8 | Majority bound | \(\lceil\log_2D\rceil\) mistakes |
-| 9 | Lower bound | An adversary can force \(\Omega(\log D)\) mistakes |
+| 8 | Majority bound | $\lceil\log_2D\rceil$ mistakes |
+| 9 | Lower bound | An adversary can force $\Omega(\log D)$ mistakes |
 | 10 | Optimality | Majority achieves the lower bound in the guru setting |
 | 11 | Problem | Real experts are not perfect |
 | 12 | Regret | Compare algorithm with best expert in hindsight |
-| 13 | Best expert | \(M^*(T)=\min_kM_k(T)\) |
-| 14 | Regret | \(R(T)=M_A(T)-M^*(T)\) |
-| 15 | Good algorithm | \(R(T)/T\to0\) |
-| 16 | Sublinear regret | \(R(T)=o(T)\) |
+| 13 | Best expert | $M^*(T)=\min_kM_k(T)$ |
+| 14 | Regret | $R(T)=M_A(T)-M^*(T)$ |
+| 15 | Good algorithm | $R(T)/T\to0$ |
+| 16 | Sublinear regret | $R(T)=o(T)$ |
 | 17 | Weighted Majority | Keep every expert but assign weights |
-| 18 | Weight penalty | Wrong experts get multiplied by \(1-\epsilon\) |
-| 19 | Potential | \(\Phi_t=\sum_k w_{t,k}\) |
-| 20 | Potential reduction | Mistake implies \(\Phi_{t+1}\leq(1-\epsilon/2)\Phi_t\) |
-| 21 | Problem with bound | Obtained bound still contains \(M^*\) |
+| 18 | Weight penalty | Wrong experts get multiplied by $1-\epsilon$ |
+| 19 | Potential | $\Phi_t=\sum_k w_{t,k}$ |
+| 20 | Potential reduction | Mistake implies $\Phi_{t+1}\leq(1-\epsilon/2)\Phi_t$ |
+| 21 | Problem with bound | Obtained bound still contains $M^*$ |
 | 22 | Impossibility | Fully adaptive adversary can force linear regret |
 | 23 | Key cause | Adversary sees the algorithm's current prediction |
 | 24 | Oblivious adversary | Outcome sequence fixed before the game |
@@ -1445,31 +1445,31 @@ That is the conceptual backbone of Week 1.
 
 | Quantity | Formula | Meaning |
 |---|---|---|
-| Expert prediction | \(x_{tk}\in\{0,1\}\) | Expert \(k\)'s prediction at round \(t\) |
-| Algorithm prediction | \(\hat y_t\in\{0,1\}\) | Algorithm's decision |
-| Actual outcome | \(y_t\in\{0,1\}\) | Truth |
-| Algorithm mistakes | \(\displaystyle M_A(T)=\sum_{t=1}^T\mathbf1[\hat y_t\neq y_t]\) | Total algorithm mistakes |
-| Expert \(k\)'s mistakes | \(\displaystyle M_k(T)=\sum_{t=1}^T\mathbf1[x_{tk}\neq y_t]\) | Mistakes of expert \(k\) |
-| Best expert | \(\displaystyle M^*(T)=\min_kM_k(T)\) | Best expert in hindsight |
-| Regret | \(\boxed{R_A(T)=M_A(T)-M^*(T)}\) | Extra mistakes over best expert |
-| Zero-average regret | \(\displaystyle R_A(T)/T\to0\) | Desired asymptotic property |
-| Sublinear regret | \(\boxed{R_A(T)=o(T)}\) | Equivalent condition |
-| Majority candidate set | \(C_{t+1}=\{k\in C_t:x_{tk}=y_t\}\) | Retain correct experts |
-| Majority reduction | \(|C_{t+1}|\leq|C_t|/2\) | After an algorithm mistake |
-| Majority mistake bound | \(\boxed{M_A\leq\lceil\log_2D\rceil}\) | Perfect-expert setting |
-| Weighted initialisation | \(w_{1,k}=1\) | Equal initial trust |
-| Total weight | \(\displaystyle\Phi_t=\sum_kw_{t,k}\) | Potential |
-| Weighted prediction | Compare \(\sum_{x_{tk}=1}w_{tk}\) and \(\sum_{x_{tk}=0}w_{tk}\) | Weighted majority |
-| Weight update | \(w_{t+1,k}=(1-\epsilon)w_{t,k}\) | If expert is wrong |
-| Correct expert update | \(w_{t+1,k}=w_{t,k}\) | If expert is correct |
-| Potential after mistake | \(\displaystyle\Phi_{t+1}\leq(1-\epsilon/2)\Phi_t\) | Key analysis step |
-| After \(M\) mistakes | \(\displaystyle\Phi_T\leq D(1-\epsilon/2)^M\) | Potential upper bound |
-| Best expert weight | \(\displaystyle w_T^*=(1-\epsilon)^{M^*}\) | Lower bound ingredient |
-| Potential lower bound | \(\displaystyle\Phi_T\geq(1-\epsilon)^{M^*}\) | Best expert is included |
-| Sandwich | \(\displaystyle(1-\epsilon)^{M^*}\leq\Phi_T\leq D(1-\epsilon/2)^M\) | Core WM analysis |
-| Lecture's regret bound | \(\displaystyle R_{WM}\leq M^*+\frac{2\log D}{\epsilon}+2\epsilon M^*\) | Bound obtained in lecture |
-| Two-expert impossibility | \(M_A=T,\ M^*\leq T/2\) | Fully adaptive adversary |
-| Result | \(\displaystyle R_A(T)\geq T/2\) | No sublinear regret in that setting |
+| Expert prediction | $x_{tk}\in\{0,1\}$ | Expert $k$'s prediction at round $t$ |
+| Algorithm prediction | $\hat y_t\in\{0,1\}$ | Algorithm's decision |
+| Actual outcome | $y_t\in\{0,1\}$ | Truth |
+| Algorithm mistakes | $\displaystyle M_A(T)=\sum_{t=1}^T\mathbf1[\hat y_t\neq y_t]$ | Total algorithm mistakes |
+| Expert $k$'s mistakes | $\displaystyle M_k(T)=\sum_{t=1}^T\mathbf1[x_{tk}\neq y_t]$ | Mistakes of expert $k$ |
+| Best expert | $\displaystyle M^*(T)=\min_kM_k(T)$ | Best expert in hindsight |
+| Regret | $\boxed{R_A(T)=M_A(T)-M^*(T)}$ | Extra mistakes over best expert |
+| Zero-average regret | $\displaystyle R_A(T)/T\to0$ | Desired asymptotic property |
+| Sublinear regret | $\boxed{R_A(T)=o(T)}$ | Equivalent condition |
+| Majority candidate set | $C_{t+1}=\{k\in C_t:x_{tk}=y_t\}$ | Retain correct experts |
+| Majority reduction | $|C_{t+1}|\leq|C_t|/2$ | After an algorithm mistake |
+| Majority mistake bound | $\boxed{M_A\leq\lceil\log_2D\rceil}$ | Perfect-expert setting |
+| Weighted initialisation | $w_{1,k}=1$ | Equal initial trust |
+| Total weight | $\displaystyle\Phi_t=\sum_kw_{t,k}$ | Potential |
+| Weighted prediction | Compare $\sum_{x_{tk}=1}w_{tk}$ and $\sum_{x_{tk}=0}w_{tk}$ | Weighted majority |
+| Weight update | $w_{t+1,k}=(1-\epsilon)w_{t,k}$ | If expert is wrong |
+| Correct expert update | $w_{t+1,k}=w_{t,k}$ | If expert is correct |
+| Potential after mistake | $\displaystyle\Phi_{t+1}\leq(1-\epsilon/2)\Phi_t$ | Key analysis step |
+| After $M$ mistakes | $\displaystyle\Phi_T\leq D(1-\epsilon/2)^M$ | Potential upper bound |
+| Best expert weight | $\displaystyle w_T^*=(1-\epsilon)^{M^*}$ | Lower bound ingredient |
+| Potential lower bound | $\displaystyle\Phi_T\geq(1-\epsilon)^{M^*}$ | Best expert is included |
+| Sandwich | $\displaystyle(1-\epsilon)^{M^*}\leq\Phi_T\leq D(1-\epsilon/2)^M$ | Core WM analysis |
+| Lecture's regret bound | $\displaystyle R_{WM}\leq M^*+\frac{2\log D}{\epsilon}+2\epsilon M^*$ | Bound obtained in lecture |
+| Two-expert impossibility | $M_A=T,\ M^*\leq T/2$ | Fully adaptive adversary |
+| Result | $\displaystyle R_A(T)\geq T/2$ | No sublinear regret in that setting |
 
 The potential-function and regret calculations above follow the lecture's derivation. L2-7 L2-7
 
@@ -1511,7 +1511,7 @@ $$
 M_A(T)\leq f(T)
 $$
 
-says a particular algorithm cannot do worse than \(f(T)\).
+says a particular algorithm cannot do worse than $f(T)$.
 
 **Lower bound:**
 
@@ -1519,7 +1519,7 @@ $$
 M_A(T)\geq f(T)
 $$
 
-under an adversarial construction says an algorithm cannot universally do better than \(f(T)\).
+under an adversarial construction says an algorithm cannot universally do better than $f(T)$.
 
 For the guru setting:
 
@@ -1567,7 +1567,7 @@ This distinction is what motivates regret.
 | Wrong expert can get weight 0 | Wrong expert gets reduced weight |
 | Suitable for perfect-expert assumption | Designed for imperfect experts |
 | Hard elimination | Soft penalty |
-| Corresponds to \(\epsilon=1\) | Usually \(0<\epsilon<1\) |
+| Corresponds to $\epsilon=1$ | Usually $0<\epsilon<1$ |
 
 ---
 
@@ -1600,7 +1600,7 @@ in the two-expert construction.
 If you have only five minutes before entering the exam hall, remember these **10 statements**:
 
 1. **Online learning = sequential decisions + feedback.**
-2. **Learning from expert advice = combine predictions of \(D\) experts.**
+2. **Learning from expert advice = combine predictions of $D$ experts.**
 3. **Perfect expert assumption → Majority Algorithm.**
 4. **Every mistake eliminates at least half the candidate experts.**
 5. Therefore:
@@ -1620,7 +1620,7 @@ If you have only five minutes before entering the exam hall, remember these **10
    $$
    \boxed{R(T)=o(T)}
    $$
-9. **Weighted Majority:** wrong expert's weight gets multiplied by \(1-\epsilon\).
+9. **Weighted Majority:** wrong expert's weight gets multiplied by $1-\epsilon$.
 10. A fully adaptive adversary can force linear regret, motivating the **oblivious adversary** model.
 
 ---
