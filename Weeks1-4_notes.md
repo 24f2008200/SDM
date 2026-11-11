@@ -149,6 +149,7 @@ If a guru exists then $m^*=0$ and $R_T=$ #mistakes $\le\log_2 d$, so $R_T/T\le \
 
 ### 6.1 Algorithm 
 $ a \in \{(0,1)\} $
+asd
 $ a \in \{0,1\} $
 
 parameter is 
