@@ -151,7 +151,7 @@ If a guru exists then $m^*=0$ and $R_T=$ #mistakes $\le\log_2 d$, so $R_T/T\le \
 parameter is 
 
 
-$\epsilon\in\{0,1\} $
+$\epsilon\in\{\(0,1\)\} $
 
 
 Initialise $w_{1,k}=1$ for all $k$. For $t=1,\dots,T$:
