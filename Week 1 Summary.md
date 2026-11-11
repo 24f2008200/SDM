@@ -922,8 +922,8 @@ Therefore:
 
 $$
 \boxed{
-w_T^*=
-(1-\epsilon)^{M^*}
+w_T^{*}=
+(1-\epsilon)^{M^{*}}
 }
 $$
 
