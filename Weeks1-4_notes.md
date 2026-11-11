@@ -199,7 +199,7 @@ $$
 Equivalently $\ R_T(\text{WM})\le m^{\ast}+2\epsilon m^{\ast}+\frac{2\ln d}{\epsilon}$.
 
 ### 6.3 Why this is *not* a no-regret guarantee
-The bound contains a **$m^{\ast}$ term with constant 1** (plus $2\epsilon m^{\ast}$). If even the best expert errs linearly ($m^{\ast}=\Theta(T)$), $R_T/T$ does **not** tend to $0$. So WM gives a regret bound, but **not sublinear regret**.
+The bound contains a **$m^{\ast}$ term with constant 1** (plus $2\epsilon m^{\ast}$). If even the best expert errs linearly $m^{\ast}=\Theta(T)$, $R_T/T$ does **not** tend to $0$. So WM gives a regret bound, but **not sublinear regret**.
 
 **Three possible explanations** the lecture considered:
 1. WM is a bad algorithm. ✗
