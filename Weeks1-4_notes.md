@@ -171,7 +171,7 @@ $$
 
 After $M$ algorithm mistakes: $\ \Phi_{T+1}\le d\,(1-\epsilon/2)^M$. $\quad(\star)$
 
-**Lower bound on $\Phi$.** $\Phi_{T+1}\ge w_{T+1,k^*}=(1-\epsilon)^{m^*}$ where $k^*$ is the best expert. $\quad(\star\star)$
+**Lower bound on $\Phi$.** $\Phi_{T+1}\ge w_{T+1,k^{\ast}}=(1-\epsilon)^{m^{\ast}}$ where $k^{\ast}$ is the best expert. $\quad(\star\star)$
 
 **Combine and take logs:**
 
