@@ -188,12 +188,12 @@ $$
 to get
 
 $$
--m^*(\epsilon+\epsilon^2)\le \ln d-\tfrac{\epsilon M}{2}
+-m^{*}(\epsilon+\epsilon^2)\le \ln d-\tfrac{\epsilon M}{2}
 \ \Longrightarrow\
-\boxed{\ M\le 2(1+\epsilon)\,m^*+\frac{2\ln d}{\epsilon}\ }
+\boxed{\ M\le 2(1+\epsilon)\,m^{*}+\frac{2\ln d}{\epsilon}\ }
 $$
 
-Equivalently $\ R_T(\text{WM})\le m^*+2\epsilon m^*+\frac{2\ln d}{\epsilon}$.
+Equivalently $\ R_T(\text{WM})\le m^{*}+2\epsilon m^{*}+\frac{2\ln d}{\epsilon}$.
 
 ### 6.3 Why this is *not* a no-regret guarantee
 The bound contains a **$m^*$ term with constant 1** (plus $2\epsilon m^*$). If even the best expert errs linearly ($m^*=\Theta(T)$), $R_T/T$ does **not** tend to $0$. So WM gives a regret bound, but **not sublinear regret**.
