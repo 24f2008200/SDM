@@ -188,9 +188,12 @@ $$
 to get
 
 $$
--m^{*}(\epsilon+\epsilon^2)\le \ln d-\tfrac{\epsilon M}{2}
-\ \Longrightarrow\
-\boxed{\ M\le 2(1+\epsilon)\,m^{*}+\frac{2\ln d}{\epsilon}\ }
+-m^{*}(\epsilon+\epsilon^2)
+\le \ln d-\frac{\epsilon M}{2}
+\quad\Longrightarrow\quad
+\boxed{
+M\le 2(1+\epsilon)m^{*}+\frac{2\ln d}{\epsilon}
+}
 $$
 
 Equivalently $\ R_T(\text{WM})\le m^{*}+2\epsilon m^{*}+\frac{2\ln d}{\epsilon}$.
