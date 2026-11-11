@@ -147,11 +147,7 @@ If a guru exists then $m^*=0$ and $R_T=$ #mistakes $\le\log_2 d$, so $R_T/T\le \
 
 **Why not Majority?** Eliminating an expert after one mistake is wrong: an expert who errs now may be the best expert later. Instead **down-weight** instead of deleting.
 
-### 6.1 Algorithm 
-parameter is 
-
-
-$\epsilon\in\{\(0,1\)\} $
+### 6.1 Algorithm ( parameter is $\epsilon\in\{\(0,1\)\} $ )
 
 
 Initialise $w_{1,k}=1$ for all $k$. For $t=1,\dots,T$:
