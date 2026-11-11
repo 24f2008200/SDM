@@ -34,8 +34,7 @@ The professor distinguishes settings by the feedback available to the learner.
 Suppose there are $d$ available actions. In round $t$, the environment generates a loss vector
 
 $$
-\boldsymbol{\ell}^{\,t}
-=
+\boldsymbol{\ell}^{\,t}=
 (\ell_1^t,\ell_2^t,\ldots,\ell_d^t).
 $$
 
@@ -83,8 +82,7 @@ After the learner predicts, the actual outcome $y_t\in\{0,1\}$ is revealed.
 The mistake indicator is
 
 $$
-\mathbf{1}\{\widehat y_t\ne y_t\}
-=
+\mathbf{1}\{\widehat y_t\ne y_t\}=
 \begin{cases}
 1,&\widehat y_t\ne y_t,\\
 0,&\widehat y_t=y_t.
@@ -94,8 +92,7 @@ $$
 The cumulative number of mistakes made by the learner is
 
 $$
-M_T
-=
+M_T=
 \sum_{t=1}^{T}
 \mathbf{1}\{\widehat y_t\ne y_t\}.
 $$
@@ -103,8 +100,7 @@ $$
 The cumulative mistakes of expert $i$ are
 
 $$
-M_{i,T}
-=
+M_{i,T}=
 \sum_{t=1}^{T}
 \mathbf{1}\{x_i^t\ne y_t\}.
 $$
@@ -158,8 +154,7 @@ At round $t$:
 Thus,
 
 $$
-C_{t+1}
-=
+C_{t+1}=
 \{i\in C_t:x_i^t=y_t\}.
 $$
 
@@ -250,8 +245,7 @@ The regret after $T$ rounds is
 
 $$
 \boxed{
-R_T
-=
+R_T=
 M_T-\min_{i\in[d]}M_{i,T}.
 }
 $$
@@ -259,10 +253,7 @@ $$
 In words:
 
 $$
-\text{Regret}
-=
-\text{Learner's cumulative mistakes}
--
+\text{Regret}=\text{Learner's cumulative mistakes}-
 \text{Best expert's cumulative mistakes in hindsight}.
 $$
 
@@ -349,8 +340,7 @@ When an expert makes a mistake, reduce its weight.
 A common update is
 
 $$
-w_i^{t+1}
-=
+w_i^{t+1}=
 \begin{cases}
 (1-\epsilon)w_i^t,
 &\text{if expert }i\text{ is wrong},\\
@@ -459,8 +449,7 @@ Once the learner uses randomness, its mistake count becomes a random variable.
 A useful performance measure is its expected number of mistakes:
 
 $$
-\mathbb E[M_T]
-=
+\mathbb E[M_T]=
 \mathbb E\left[
 \sum_{t=1}^{T}
 \mathbf 1\{\widehat y_t\ne y_t\}
@@ -471,8 +460,7 @@ By linearity of expectation,
 
 $$
 \boxed{
-\mathbb E[M_T]
-=
+\mathbb E[M_T]=
 \sum_{t=1}^{T}
 \Pr(\widehat y_t\ne y_t).
 }
@@ -487,8 +475,7 @@ The learner can choose its binary prediction according to the fraction of total 
 Define
 
 $$
-p_t(1)
-=
+p_t(1)=
 \frac{\sum_{i:x_i^t=1}w_i^t}
 {\sum_{i=1}^{d}w_i^t},
 $$
@@ -516,8 +503,7 @@ This expected mistake can be represented as a weighted average of the experts' i
 A common multiplicative update is
 
 $$
-w_i^{t+1}
-=
+w_i^{t+1}=
 w_i^t(1-\epsilon)^{\ell_i^t},
 $$
 
@@ -601,8 +587,7 @@ The set of all such vectors is the probability simplex:
 
 $$
 \boxed{
-\Delta_d
-=
+\Delta_d=
 \left\{
 p\in\mathbb R^d:
 p_i\ge0,\;
@@ -621,8 +606,7 @@ The learner's loss is the dot product
 
 $$
 \boxed{
-\langle p^t,\ell^t\rangle
-=
+\langle p^t,\ell^t\rangle=
 \sum_{i=1}^{d}p_i^t\ell_i^t.
 }
 $$
@@ -650,10 +634,8 @@ The learner samples action $i$ with probability $p_i^t$, and plays that action.
 The actual loss is random, but its expected value is
 
 $$
-\mathbb E[\ell_{\text{chosen}}^t]
-=
-\sum_{i=1}^{d}p_i^t\ell_i^t
-=
+\mathbb E[\ell_{\text{chosen}}^t]=
+\sum_{i=1}^{d}p_i^t\ell_i^t=
 \langle p^t,\ell^t\rangle.
 $$
 
@@ -667,10 +649,8 @@ The learner is compared against the best fixed point in the simplex:
 
 $$
 \boxed{
-R_T
-=
-\sum_{t=1}^{T}\langle p^t,\ell^t\rangle
--
+R_T=
+\sum_{t=1}^{T}\langle p^t,\ell^t\rangle-
 \min_{p\in\Delta_d}
 \sum_{t=1}^{T}\langle p,\ell^t\rangle.
 }
@@ -680,8 +660,7 @@ Since $p$ is fixed across all rounds in the hindsight comparison, linearity give
 
 $$
 \min_{p\in\Delta_d}
-\sum_{t=1}^{T}\langle p,\ell^t\rangle
-=
+\sum_{t=1}^{T}\langle p,\ell^t\rangle=
 \min_{p\in\Delta_d}
 \left\langle p,\sum_{t=1}^{T}\ell^t\right\rangle.
 $$
@@ -691,8 +670,7 @@ A linear function over a simplex achieves its minimum at a vertex. Therefore,
 $$
 \boxed{
 \min_{p\in\Delta_d}
-\sum_{t=1}^{T}\langle p,\ell^t\rangle
-=
+\sum_{t=1}^{T}\langle p,\ell^t\rangle=
 \min_{i\in[d]}\sum_{t=1}^{T}\ell_i^t.
 }
 $$
@@ -762,8 +740,7 @@ $$
 
 $$
 \boxed{
-w_i^{t+1}
-=
+w_i^{t+1}=
 w_i^t\exp(-\eta\ell_i^t).
 }
 $$
@@ -793,8 +770,7 @@ $$
 Hedge gives
 
 $$
-w_i^{t+1}
-=
+w_i^{t+1}=
 \begin{cases}
 w_i^t,&\ell_i^t=0,\\
 w_i^te^{-\eta},&\ell_i^t=1.
@@ -989,8 +965,7 @@ $$
 Repeatedly applying the update gives
 
 $$
-w_j^{T+1}
-=
+w_j^{T+1}=
 \exp\left(
 -\eta\sum_{t=1}^{T}\ell_j^t
 \right),
@@ -1002,8 +977,7 @@ Hence,
 
 $$
 \ln\Phi^{T+1}
-\ge
--\eta\sum_{t=1}^{T}\ell_j^t.
+\ge-\eta\sum_{t=1}^{T}\ell_j^t.
 $$
 
 Choose $j$ to be the best fixed action in hindsight:
@@ -1011,8 +985,7 @@ Choose $j$ to be the best fixed action in hindsight:
 $$
 \boxed{
 \ln\Phi^{T+1}
-\ge
--\eta\min_j\sum_{t=1}^{T}\ell_j^t.
+\ge-\eta\min_j\sum_{t=1}^{T}\ell_j^t.
 }
 \tag{2}
 $$
@@ -1064,12 +1037,10 @@ $$
 Since $p^t$ is a probability vector,
 
 $$
-\left\langle p^t,(\ell^t)^2\right\rangle
-=
+\left\langle p^t,(\ell^t)^2\right\rangle=
 \sum_i p_i^t(\ell_i^t)^2
 \le
-B^2\sum_i p_i^t
-=
+B^2\sum_i p_i^t=
 B^2.
 $$
 
@@ -1096,8 +1067,7 @@ $$
 Differentiate:
 
 $$
-f'(\eta)
-=
+f'(\eta)=
 -\frac{\ln d}{\eta^2}
 +\frac{TB^2}{2}.
 $$
@@ -1105,8 +1075,7 @@ $$
 Set $f'(\eta)=0$:
 
 $$
-\frac{\ln d}{\eta^2}
-=
+\frac{\ln d}{\eta^2}=
 \frac{TB^2}{2}.
 $$
 
@@ -1120,8 +1089,7 @@ and
 
 $$
 \boxed{
-\eta^\star
-=
+\eta^\star=
 \frac{1}{B}
 \sqrt{\frac{2\ln d}{T}}.
 }
@@ -1152,8 +1120,7 @@ $$
 Dividing by $T$,
 
 $$
-\frac{R_T}{T}
-=
+\frac{R_T}{T}=
 O\left(\sqrt{\frac{\ln d}{T}}\right)
 \longrightarrow0
 $$
@@ -1223,10 +1190,8 @@ The loss of an assignment is the sum of the losses of the selected vehicle-route
 The learner wants to compare its cumulative loss against the best fixed assignment in hindsight:
 
 $$
-R_T
-=
-\sum_{t=1}^{T}\langle M^t,L^t\rangle
--
+R_T=
+\sum_{t=1}^{T}\langle M^t,L^t\rangle-
 \min_{M\in\mathcal P_n}
 \sum_{t=1}^{T}\langle M,L^t\rangle,
 $$
@@ -1240,8 +1205,7 @@ where $\mathcal P_n$ is the set of all $n\times n$ permutation matrices.
 An assignment can be represented by an $n\times n$ matrix $M$:
 
 $$
-M_{ij}
-=
+M_{ij}=
 \begin{cases}
 1,&\text{vehicle }i\text{ is assigned to route }j,\\
 0,&\text{otherwise}.
@@ -1282,8 +1246,7 @@ The assignment loss is
 
 $$
 \boxed{
-\langle M,L^t\rangle
-=
+\langle M,L^t\rangle=
 \sum_{i=1}^{n}\sum_{j=1}^{n}M_{ij}L_{ij}^t.
 }
 $$
@@ -1423,8 +1386,7 @@ Find the minimum weight among the selected edges:
 
 $$
 \boxed{
-\lambda
-=
+\lambda=
 \min_{(i,j):M_{ij}=1}A_{ij}.
 }
 $$
@@ -1566,8 +1528,7 @@ The resulting matrix provides the desired doubly stochastic representation.
 Use the matching-based algorithm to decompose
 
 $$
-P^t
-=
+P^t=
 \sum_{r=1}^{k_t}\lambda_r^tM_r^t,
 \qquad
 k_t\le n^2.
@@ -1581,8 +1542,7 @@ The expected loss is
 
 $$
 \boxed{
-\mathbb E[\text{loss at }t]
-=
+\mathbb E[\text{loss at }t]=
 \langle P^t,L^t\rangle.
 }
 $$
@@ -1593,8 +1553,7 @@ After receiving the loss matrix $L^t$, update each entry:
 
 $$
 \boxed{
-W_{ij}^{t+1}
-=
+W_{ij}^{t+1}=
 W_{ij}^t\exp(-\eta L_{ij}^t).
 }
 $$
@@ -1691,8 +1650,7 @@ $$
 
 $$
 \boxed{
-\mathbb E\left[\sum_t X_t\right]
-=
+\mathbb E\left[\sum_t X_t\right]=
 \sum_t\mathbb E[X_t].
 }
 $$
@@ -1702,8 +1660,7 @@ Independence is not required.
 ### Linearity of the dot product
 
 $$
-\sum_t\langle p,\ell^t\rangle
-=
+\sum_t\langle p,\ell^t\rangle=
 \left\langle p,\sum_t\ell^t\right\rangle.
 $$
 
@@ -1713,8 +1670,7 @@ This is valid when the same fixed comparator $p$ is used in every round.
 
 $$
 \boxed{
-\min_{p\in\Delta_d}\langle p,z\rangle
-=
+\min_{p\in\Delta_d}\langle p,z\rangle=
 \min_i z_i.
 }
 $$
