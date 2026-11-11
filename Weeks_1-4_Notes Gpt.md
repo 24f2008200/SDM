@@ -377,7 +377,7 @@ $$
 \widehat y_t=
 \begin{cases}
 1,&W_1^t\ge W_0^t,\\
-0,&W_1^t<W_0^t.
+0,&W_1^t<W_0^t,
 \end{cases}
 $$
 
