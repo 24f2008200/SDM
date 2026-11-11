@@ -37,12 +37,12 @@
 | Step | Setting | Goal | Algorithm | Guarantee |
 |---|---|---|---|---|
 | 1 | $d$ experts, one is **perfect** (guru) | minimise **mistakes** | Majority (keep consistent experts, follow majority) | $\le \lceil \log_2 d\rceil$ mistakes; **optimal** (adversary forces $\log_2 d$) |
-| 2 | **No** perfect expert | Mistakes can be forced to $T$, so use **regret** vs best expert | Weighted Majority (deterministic) | $M \le 2(1+\epsilon)m^* + \frac{2\ln d}{\epsilon}$, **not** sublinear regret |
+| 2 | **No** perfect expert | Mistakes can be forced to $T$, so use **regret** vs best expert | Weighted Majority (deterministic) | $M \le 2(1+\epsilon)m^{\ast} + \frac{2\ln d}{\epsilon}$, **not** sublinear regret |
 | 3 | Same, adversary sees the algorithm's output | — | — | **Cover:** no *deterministic* algorithm has sublinear regret |
-| 4 | **Oblivious** adversary + **randomised** algorithm, measure **expected** regret | sublinear regret | Randomized Weighted Majority (RWM) | $\text{Regret}\le \frac{\ln d}{\epsilon}+\epsilon m^*$; with $\epsilon=\sqrt{\ln d/T}$: $\le 2\sqrt{T\ln d}$ |
+| 4 | **Oblivious** adversary + **randomised** algorithm, measure **expected** regret | sublinear regret | Randomized Weighted Majority (RWM) | $\text{Regret}\le \frac{\ln d}{\epsilon}+\epsilon m^{\ast}$; with $\epsilon=\sqrt{\ln d/T}$: $\le 2\sqrt{T\ln d}$ |
 | 5 | Unknown $T$ | infinite-horizon bound | **Doubling trick** (blocks $1,2,4,8,\dots$, reset weights) | $O(\sqrt{T\ln d})$ |
 | 6 | Any algorithm | lower bound | Random-coin adversary, 2 dumb experts | $\Omega(\sqrt T)$ $\Rightarrow$ RWM is optimal in $T$ |
-| 7 | General **linear game on simplex**, losses $\ell_t\in[0,B]^d$ | regret vs best fixed point | **Hedge**: $w_{t+1,i}=w_{t,i}e^{-\eta \ell_{t,i}}$ | $\le \frac{\ln d}{\eta}+\frac{\eta T B^2}{2}$; $\eta^*=\frac1B\sqrt{\frac{2\ln d}{T}}$ gives $\sqrt{2TB^2\ln d}$ |
+| 7 | General **linear game on simplex**, losses $\ell_t\in[0,B]^d$ | regret vs best fixed point | **Hedge**: $w_{t+1,i}=w_{t,i}e^{-\eta \ell_{t,i}}$ | $\le \frac{\ln d}{\eta}+\frac{\eta T B^2}{2}$; $\eta^{\ast}=\frac1B\sqrt{\frac{2\ln d}{T}}$ gives $\sqrt{2TB^2\ln d}$ |
 | 8 | **Combinatorial** actions ($d=n!$) | efficient Hedge | Represent as permutation matrices; maintain a **doubly stochastic** matrix; **Sinkhorn** (projection) + **matching-based decomposition** (Birkhoff/Carathéodory) | still $O(\sqrt{T\log d})$ with $d=n!$, poly-time per round |
 
 **Five ideas to remember**
@@ -123,7 +123,7 @@ If **no restriction** is placed on the adversary (it controls experts and market
 You cannot blame the algorithm if all experts are bad, but you *can* if some expert is good and the algorithm fails to exploit it. So compare to the **best expert in hindsight**:
 
 $$
-\boxed{\ R_T(\mathcal A)=\underbrace{\sum_{t=1}^{T}\mathbf 1[\hat y_t\ne y_t]}_{\text{algorithm's mistakes}}-\underbrace{\min_{k\in[d]}\sum_{t=1}^{T}\mathbf 1[x_{t,k}\ne y_t]}_{\text{best expert's mistakes } m^*_T}\ }
+\boxed{\ R_T(\mathcal A)=\underbrace{\sum_{t=1}^{T}\mathbf 1[\hat y_t\ne y_t]}_{\text{algorithm's mistakes}}-\underbrace{\min_{k\in[d]}\sum_{t=1}^{T}\mathbf 1[x_{t,k}\ne y_t]}_{\text{best expert's mistakes } m^{\ast}_T}\ }
 $$
 
 * Called **regret** because it is how much you "regret" not following the best expert from day 1.
@@ -139,7 +139,7 @@ $$
 Per-round average regret vanishes: the algorithm "catches up" with the best expert.
 
 ### 5.4 Sanity check (consistency with the guru case)
-If a guru exists then $m^*=0$ and $R_T=$ #mistakes $\le\log_2 d$, so $R_T/T\le \log_2 d/T\to0$. Majority is therefore a no-regret algorithm in the realizable case, and regret **generalises** the earlier definition.
+If a guru exists then $m^{\ast}=0$ and $R_T=$ #mistakes $\le\log_2 d$, so $R_T/T\le \log_2 d/T\to0$. Majority is therefore a no-regret algorithm in the realizable case, and regret **generalises** the earlier definition.
 
 ---
 
@@ -176,7 +176,7 @@ After $M$ algorithm mistakes: $\ \Phi_{T+1}\le d\,(1-\epsilon/2)^M$. $\quad(\sta
 **Combine and take logs:**
 
 $$
-m^*\ln(1-\epsilon)\le \ln d + M\ln\!\Big(1-\tfrac{\epsilon}{2}\Big).
+m^{\ast}\ln(1-\epsilon)\le \ln d + M\ln\!\Big(1-\tfrac{\epsilon}{2}\Big).
 $$
 
 Use the two standard inequalities
@@ -196,10 +196,10 @@ M\le 2(1+\epsilon)m^{\ast}+\frac{2\ln d}{\epsilon}
 }
 $$
 
-Equivalently $\ R_T(\text{WM})\le m^{*}+2\epsilon m^{*}+\frac{2\ln d}{\epsilon}$.
+Equivalently $\ R_T(\text{WM})\le m^{\ast}+2\epsilon m^{\ast}+\frac{2\ln d}{\epsilon}$.
 
 ### 6.3 Why this is *not* a no-regret guarantee
-The bound contains a **$m^*$ term with constant 1** (plus $2\epsilon m^*$). If even the best expert errs linearly ($m^*=\Theta(T)$), $R_T/T$ does **not** tend to $0$. So WM gives a regret bound, but **not sublinear regret**.
+The bound contains a **$m^{\ast}$ term with constant 1** (plus $2\epsilon m^{\ast}$). If even the best expert errs linearly ($m^{\ast}=\Theta(T)$), $R_T/T$ does **not** tend to $0$. So WM gives a regret bound, but **not sublinear regret**.
 
 **Three possible explanations** the lecture considered:
 1. WM is a bad algorithm. ✗
@@ -294,32 +294,32 @@ $$
 
 (Compare WM: the factor $(1-\epsilon/2)$ becomes $(1-\epsilon\lvert p_t-y_t\rvert)$. The "2" from "majority" disappears.)
 
-Lower bound: $\Phi_{T+1}\ge(1-\epsilon)^{m^*}$. Take logs, use $\ln(1-x)\le -x$ on the product side and $\ln(1-x)\ge -x-x^2$ on the other:
+Lower bound: $\Phi_{T+1}\ge(1-\epsilon)^{m^{\ast}}$. Take logs, use $\ln(1-x)\le -x$ on the product side and $\ln(1-x)\ge -x-x^2$ on the other:
 
 $$
--m^*(\epsilon+\epsilon^2)\le\ln d-\epsilon\sum_{t}\lvert p_t-y_t\rvert
+-m^{\ast}(\epsilon+\epsilon^2)\le\ln d-\epsilon\sum_{t}\lvert p_t-y_t\rvert
 $$
 
 $$
-\boxed{\ \mathbb E[R_T(\text{RWM})]=\sum_t\lvert p_t-y_t\rvert-m^*\ \le\ \frac{\ln d}{\epsilon}+\epsilon\, m^*\ }
+\boxed{\ \mathbb E[R_T(\text{RWM})]=\sum_t\lvert p_t-y_t\rvert-m^{\ast}\ \le\ \frac{\ln d}{\epsilon}+\epsilon\, m^{\ast}\ }
 $$
 
-Compare with WM: no extra $m^*$ term. This is the improvement.
+Compare with WM: no extra $m^{\ast}$ term. This is the improvement.
 
 ### 9.3 Choosing $\epsilon$
-Using $m^*\le T$: minimise $f(\epsilon)=\frac{\ln d}{\epsilon}+\epsilon T$.
+Using $m^{\ast}\le T$: minimise $f(\epsilon)=\frac{\ln d}{\epsilon}+\epsilon T$.
 
 $$
-f'(\epsilon)=-\frac{\ln d}{\epsilon^2}+T=0\ \Rightarrow\ \epsilon^*=\sqrt{\frac{\ln d}{T}}
+f'(\epsilon)=-\frac{\ln d}{\epsilon^2}+T=0\ \Rightarrow\ \epsilon^{\ast}=\sqrt{\frac{\ln d}{T}}
 $$
 
 $$
 \boxed{\ \mathbb E[R_T(\text{RWM})]\le 2\sqrt{T\ln d}\ }\qquad\Rightarrow\qquad \frac{R_T}{T}\le 2\sqrt{\frac{\ln d}{T}}\to0 .
 $$
 
-(Valid when $\epsilon^*\le\tfrac12$, i.e. $T\ge4\ln d$, since $\ln(1-x)\ge-x-x^2$ was used on $[0,\frac12]$.)
+(Valid when $\epsilon^{\ast}\le\tfrac12$, i.e. $T\ge4\ln d$, since $\ln(1-x)\ge-x-x^2$ was used on $[0,\frac12]$.)
 
-**Caveat:** $\epsilon^*$ depends on $T$, so this is a **finite-horizon** bound: you must know $T$ in advance.
+**Caveat:** $\epsilon^{\ast}$ depends on $T$, so this is a **finite-horizon** bound: you must know $T$ in advance.
 
 ---
 
@@ -468,16 +468,16 @@ $$
 \ln\Phi_{T+1}\le\ln d-\eta\sum_t\langle p_t,\ell_t\rangle+\tfrac{\eta^2}{2}\sum_t\langle p_t,\ell_t^2\rangle .\qquad(1)
 $$
 
-**Step 5: lower bound with the best action $i^*$.**
+**Step 5: lower bound with the best action $i^{\ast}$.**
 
 $$
-\ln\Phi_{T+1}\ge\ln w_{T+1,i^*}=-\eta\sum_t\ell_{t,i^*}.\qquad(2)
+\ln\Phi_{T+1}\ge\ln w_{T+1,i^{\ast}}=-\eta\sum_t\ell_{t,i^{\ast}}.\qquad(2)
 $$
 
 **Step 6: combine (1) and (2) and divide by $\eta$.**
 
 $$
-\underbrace{\sum_t\langle p_t,\ell_t\rangle-\sum_t\ell_{t,i^*}}_{R_T}\le\frac{\ln d}{\eta}+\frac\eta2\sum_t\langle p_t,\ell_t^{2}\rangle .
+\underbrace{\sum_t\langle p_t,\ell_t\rangle-\sum_t\ell_{t,i^{\ast}}}_{R_T}\le\frac{\ln d}{\eta}+\frac\eta2\sum_t\langle p_t,\ell_t^{2}\rangle .
 $$
 
 **Step 7: bound the last term.** Since $\ell_{t,i}\le B$: $\langle p_t,\ell_t^2\rangle\le B^2\sum_ip_{t,i}=B^2$. Hence
@@ -498,17 +498,17 @@ $$
 \ \Rightarrow\ 
 \eta^2=\frac{2\ln d}{TB^2}
 \ \Rightarrow\ 
-\boxed{\ \eta^*=\sqrt{\frac{2\ln d}{TB^2}}=\frac1B\sqrt{\frac{2\ln d}{T}}\ }
+\boxed{\ \eta^{\ast}=\sqrt{\frac{2\ln d}{TB^2}}=\frac1B\sqrt{\frac{2\ln d}{T}}\ }
 $$
 
 ($C$ is convex in $\eta>0$, so this stationary point is the minimum.)
 
-**Plug $\eta^*$ back into $C$:**
+**Plug $\eta^{\ast}$ back into $C$:**
 
 $$
-\frac{\ln d}{\eta^*}=\ln d\cdot\sqrt{\frac{TB^2}{2\ln d}}=\frac{1}{\sqrt2}\sqrt{\ln d}\,\sqrt{TB^2},
+\frac{\ln d}{\eta^{\ast}}=\ln d\cdot\sqrt{\frac{TB^2}{2\ln d}}=\frac{1}{\sqrt2}\sqrt{\ln d}\,\sqrt{TB^2},
 \qquad
-\frac{\eta^*TB^2}{2}=\frac12\sqrt{\frac{2\ln d}{TB^2}}\,TB^2=\frac1{\sqrt2}\sqrt{\ln d}\,\sqrt{TB^2}.
+\frac{\eta^{\ast}TB^2}{2}=\frac12\sqrt{\frac{2\ln d}{TB^2}}\,TB^2=\frac1{\sqrt2}\sqrt{\ln d}\,\sqrt{TB^2}.
 $$
 
 The two terms are **equal** at the optimum (a general feature of this kind of tuning), so
@@ -520,7 +520,7 @@ $$
 Per round: $\frac{R_T}{T}\le B\sqrt{\frac{2\ln d}{T}}\to0$. Hedge is a **no-regret** algorithm for linear games on the simplex.
 
 ### 13.4 Remarks
-* $\eta^*$ needs $T$ and $B$ in advance (finite horizon). The doubling trick fixes the $T$-dependence.
+* $\eta^{\ast}$ needs $T$ and $B$ in advance (finite horizon). The doubling trick fixes the $T$-dependence.
 * **Trade-off:** small $\eta$ $\Rightarrow$ slow learning ($\ln d/\eta$ large). Large $\eta$ $\Rightarrow$ over-reacts to noise ($\eta TB^2/2$ large).
 * Dependence on the number of actions is only $\sqrt{\ln d}$, so adding actions is almost free: that is why $d=n!$ is still fine *statistically*; the issue is *computation*.
 
@@ -630,13 +630,13 @@ Hedge assumes **simplex actions + linear loss**. Standard ML uses other losses (
 | 4 | No-regret condition | $R_T/T\to0$ (sublinear, $R_T=o(T)$) | Goal |
 | 5 | WM update | $w_{t+1,k}=(1-\epsilon)w_{t,k}$ for wrong experts | $\epsilon=1$: Majority |
 | 6 | WM potential step | $\Phi_{t+1}\le\Phi_t(1-\epsilon/2)$ on a mistake | weighted majority was wrong |
-| 7 | WM bound | $M\le2(1+\epsilon)m^*+\frac{2\ln d}{\epsilon}$ | Not sublinear |
+| 7 | WM bound | $M\le2(1+\epsilon)m^{\ast}+\frac{2\ln d}{\epsilon}$ | Not sublinear |
 | 8 | Cover's lower bound (deterministic) | $R_T\ge T/2$ | 2 constant experts, reactive adversary |
 | 9 | Expected mistakes | $\mathbb E[\text{mistakes}]=\sum_t\Pr(\hat y_t\neq y_t)=\sum_t\lvert p_t-y_t\rvert$ | $p_t=\Pr(\hat y_t=1)$ |
 | 10 | RWM prediction | $p_t=\dfrac{\sum_{k:x_{t,k}=1}w_{t,k}}{\sum_kw_{t,k}}$ | |
 | 11 | RWM potential | $\Phi_{t+1}=\Phi_t\,(1-\epsilon\lvert p_t-y_t\rvert)$ | |
-| 12 | RWM bound | $\mathbb E[R_T]\le\dfrac{\ln d}{\epsilon}+\epsilon m^*$ | |
-| 13 | Optimal $\epsilon$ (RWM) | $\epsilon^*=\sqrt{\ln d/T}$ | needs $T$ |
+| 12 | RWM bound | $\mathbb E[R_T]\le\dfrac{\ln d}{\epsilon}+\epsilon m^{\ast}$ | |
+| 13 | Optimal $\epsilon$ (RWM) | $\epsilon^{\ast}=\sqrt{\ln d/T}$ | needs $T$ |
 | 14 | RWM tuned regret | $\mathbb E[R_T]\le2\sqrt{T\ln d}$ | |
 | 15 | Doubling trick | blocks $2^0,2^1,\dots$; $R_T\le\frac{2\sqrt2}{\sqrt2-1}\sqrt{T\ln d}$ | anytime bound |
 | 16 | Lower bound (any alg.) | $\mathbb E[R_T]=\Omega(\sqrt T)$ | $\mathbb E[\min(N_0,N_1)]=\frac T2-\Theta(\sqrt T)$ |
@@ -646,7 +646,7 @@ Hedge assumes **simplex actions + linear loss**. Standard ML uses other losses (
 | 20 | Key inequalities | $1+x\le e^x$; $e^x\le1+x+\tfrac{x^2}2$ ($x\le0$); $\ln(1-x)\le-x$; $\ln(1-x)\ge-x-x^2$ ($0\le x\le\tfrac12$) | used in all proofs |
 | 21 | Hedge one-step | $\ln\frac{\Phi_{t+1}}{\Phi_t}\le-\eta\langle p_t,\ell_t\rangle+\frac{\eta^2}2\langle p_t,\ell_t^2\rangle$ | |
 | 22 | Hedge bound | $R_T\le\dfrac{\ln d}{\eta}+\dfrac{\eta TB^2}{2}$ | $\ell_{t,i}\in[0,B]$ |
-| 23 | Optimal $\eta$ (slide) | $\eta^*=\sqrt{\dfrac{2\ln d}{TB^2}}=\dfrac1B\sqrt{\dfrac{2\ln d}{T}}$ | from $C'(\eta)=0$ |
+| 23 | Optimal $\eta$ (slide) | $\eta^{\ast}=\sqrt{\dfrac{2\ln d}{TB^2}}=\dfrac1B\sqrt{\dfrac{2\ln d}{T}}$ | from $C'(\eta)=0$ |
 | 24 | Hedge tuned regret | $R_T\le\sqrt{2\ln(d)\,TB^2}=O(\sqrt{T\ln d})$ | both terms equal at optimum |
 | 25 | Doubly stochastic | $M_{ij}\in[0,1]$, $\sum_jM_{ij}=1\ \forall i$, $\sum_iM_{ij}=1\ \forall j$ | |
 | 26 | Birkhoff | $\text{conv}(\text{perm. matrices})=\text{DSP}$ | |
@@ -668,14 +668,14 @@ Hedge assumes **simplex actions + linear loss**. Standard ML uses other losses (
 
 ### 16.2 Proof templates (likely to be asked as "derive/fill in")
 1. **Majority bound:** each mistake halves $|C_t|$ $\Rightarrow$ $\log_2d$.
-2. **Potential argument** ($\Phi_t=\sum w$): upper bound by algorithm loss, lower bound by best expert $w_{i^*}$, take logs, apply the inequalities.
+2. **Potential argument** ($\Phi_t=\sum w$): upper bound by algorithm loss, lower bound by best expert $w_{i^{\ast}}$, take logs, apply the inequalities.
 3. **Optimising the parameter:** differentiate, set to zero, substitute back; both terms become equal.
 4. **Lower bound:** adversary argument (guru case) / random-coin adversary (regret case).
 
 ### 16.3 Common traps
 * **Log base:** $\lceil\log_2d\rceil$ for Majority; $\ln d$ in WM/RWM/Hedge.
-* **WM vs RWM constants:** WM has factor $2$ and an *extra* $m^*$ term. RWM has $\frac{\ln d}{\epsilon}+\epsilon m^*$ with **no** extra $m^*$.
-* **$\epsilon^*$ (RWM)** $=\sqrt{\ln d/T}$ (no 2), but **$\eta^*$ (Hedge)** $=\frac1B\sqrt{2\ln d/T}$ (has a 2 and $B$). Tuned bounds: RWM $2\sqrt{T\ln d}$, Hedge $B\sqrt{2T\ln d}$.
+* **WM vs RWM constants:** WM has factor $2$ and an *extra* $m^{\ast}$ term. RWM has $\frac{\ln d}{\epsilon}+\epsilon m^{\ast}$ with **no** extra $m^{\ast}$.
+* **$\epsilon^{\ast}$ (RWM)** $=\sqrt{\ln d/T}$ (no 2), but **$\eta^{\ast}$ (Hedge)** $=\frac1B\sqrt{2\ln d/T}$ (has a 2 and $B$). Tuned bounds: RWM $2\sqrt{T\ln d}$, Hedge $B\sqrt{2T\ln d}$.
 * **Equal blocks do NOT work, doubling blocks do.** The reason: equal blocks give regret linear in $T$.
 * **Determinism:** WM is deterministic $\Rightarrow$ cannot be no-regret (Cover). Randomisation is essential.
 * **"Expected" regret:** $\Pr(\hat y_t\ne y_t)=\lvert p_t-y_t\rvert$, true for both $y_t=0$ and $y_t=1$.
@@ -688,7 +688,7 @@ Hedge assumes **simplex actions + linear loss**. Standard ML uses other losses (
 
 ### 16.4 Quick numeric practice patterns
 * Given weights and advice: compute $p_t=\frac{\sum\text{weights of experts saying }1}{\sum\text{all weights}}$ and expected loss $=1-p_t$ if $y_t=1$, $p_t$ if $y_t=0$.
-* Given $d,T,B$: compute $\eta^*$ and the bound $B\sqrt{2T\ln d}$. E.g. $d=20,\ T=5000,\ B=3$: $\eta^*=\frac13\sqrt{\frac{2\ln20}{5000}}\approx0.0115$; bound $\approx519$.
+* Given $d,T,B$: compute $\eta^{\ast}$ and the bound $B\sqrt{2T\ln d}$. E.g. $d=20,\ T=5000,\ B=3$: $\eta^{\ast}=\frac13\sqrt{\frac{2\ln20}{5000}}\approx0.0115$; bound $\approx519$.
 * Given a $3\times3$ doubly stochastic matrix: run matching + peel; check the $\lambda$'s sum to 1.
 * Given $n$: number of actions $n!$, representation dimension $n^2$, at most $n^2+1$ permutations (lecture's bound; algorithm gives $\le n^2$).
 * Mistake bound examples: $d=10^6$ $\Rightarrow$ $\lceil\log_2 10^6\rceil=20$.
@@ -708,7 +708,7 @@ Hedge assumes **simplex actions + linear loss**. Standard ML uses other losses (
 **A.** $\lceil\log_21000\rceil=10$.
 
 **Q2.** Why can't WM have sublinear regret?
-**A.** It is deterministic. Cover's adversary (two constant experts, truth = opposite of prediction) forces $R_T\ge T/2$. Also its bound contains a $m^*$ term with constant 1.
+**A.** It is deterministic. Cover's adversary (two constant experts, truth = opposite of prediction) forces $R_T\ge T/2$. Also its bound contains a $m^{\ast}$ term with constant 1.
 
 **Q3.** State $\Pr(\hat y_t\ne y_t)$ in terms of $p_t=\Pr(\hat y_t=1)$.
 **A.** $\lvert p_t-y_t\rvert$.
@@ -716,17 +716,17 @@ Hedge assumes **simplex actions + linear loss**. Standard ML uses other losses (
 **Q4.** Weights $(1,\,0.5,\,0.5)$, advice $(0,1,1)$, truth $y_t=0$. Expected loss of RWM?
 **A.** $p_t=\frac{0.5+0.5}{2}=0.5$; $y_t=0\Rightarrow$ loss $=p_t=0.5$.
 
-**Q5.** Derive $\epsilon^*$ for RWM.
-**A.** Minimise $\frac{\ln d}{\epsilon}+\epsilon T$: $-\frac{\ln d}{\epsilon^2}+T=0\Rightarrow\epsilon^*=\sqrt{\ln d/T}$; value $2\sqrt{T\ln d}$.
+**Q5.** Derive $\epsilon^{\ast}$ for RWM.
+**A.** Minimise $\frac{\ln d}{\epsilon}+\epsilon T$: $-\frac{\ln d}{\epsilon^2}+T=0\Rightarrow\epsilon^{\ast}=\sqrt{\ln d/T}$; value $2\sqrt{T\ln d}$.
 
 **Q6.** Why does the doubling trick work but equal blocks of size $K$ don't?
 **A.** Equal blocks: $T/K$ blocks each costing $\Theta(\sqrt K)$ $\Rightarrow$ $\Theta(T/\sqrt K)$, linear in $T$. Doubling: block costs $\sqrt{2^\ell}$ grow geometrically, the sum is dominated by the last block, $\Theta(\sqrt T)$.
 
-**Q7.** Derive Hedge's $\eta^*$ and bound (the slide).
-**A.** $C(\eta)=\frac{\ln d}\eta+\frac{\eta TB^2}2$; $C'=0\Rightarrow\eta^*=\frac1B\sqrt{2\ln d/T}$; $C(\eta^*)=\sqrt{2TB^2\ln d}$.
+**Q7.** Derive Hedge's $\eta^{\ast}$ and bound (the slide).
+**A.** $C(\eta)=\frac{\ln d}\eta+\frac{\eta TB^2}2$; $C'=0\Rightarrow\eta^{\ast}=\frac1B\sqrt{2\ln d/T}$; $C(\eta^{\ast})=\sqrt{2TB^2\ln d}$.
 
 **Q8.** Show that $\min_{q\in\Delta_d}\langle q,L\rangle=\min_iL_i$.
-**A.** $\langle q,L\rangle=\sum_iq_iL_i\ge\min_jL_j\sum_iq_i=\min_jL_j$, with equality at the corner $e_{j^*}$.
+**A.** $\langle q,L\rangle=\sum_iq_iL_i\ge\min_jL_j\sum_iq_i=\min_jL_j$, with equality at the corner $e_{j^{\ast}}$.
 
 **Q9.** Why does Hedge never play a corner of the simplex?
 **A.** $w_{t,i}=e^{-\eta\sum_s\ell_{s,i}}>0$ always; normalising keeps all coordinates positive.
@@ -754,13 +754,13 @@ The lecture was transcribed automatically and spoken live, so a few things are g
 
 1. **"Logarithm of $d$" vs $\log_2 d$:** the Majority bound is $\lceil\log_2d\rceil$ (halving). Elsewhere (WM/RWM/Hedge) the natural log $\ln d$ appears.
 2. **Final RWM/doubling statement:** the transcript says "$O(\sqrt{T\log T})$" at one point. The derivation (and the later statement "$\sqrt{T\log d}$") gives **$O(\sqrt{T\ln d})$**. $\ln d$ is the number-of-experts term, not $\ln T$.
-3. **$\epsilon^*$ typo:** transcript says "$\sqrt{\ln d/d}$"; it should be $\sqrt{\ln d/T}$.
+3. **$\epsilon^{\ast}$ typo:** transcript says "$\sqrt{\ln d/d}$"; it should be $\sqrt{\ln d/T}$.
 4. **Hedge potential lemma:** the lecture writes $e^x\le1+x+x^2/2$ for $x\le0$ (true). The RWM lecture uses $\ln(1-x)\ge-x-x^2$ on $[0,\frac12]$ (the transcript first says $x^2/2$, then corrects to $x^2$).
 5. **Numbers in the $3$-expert example:** transcript drops leading zeros (e.g. "$.04$"). The correct values are $p=0.6$ and loss $0.4$.
 6. **Birkhoff decomposition example:** the last lines of the transcript's worked example are garbled; the clean decomposition (weights $0.2,0.2,0.1,0.3,0.2$) is in §14.6 and is checked in the code below.
 7. **Carathéodory count:** lecture states $n^2+1$ (dimension $n^2$). The actual dimension of the Birkhoff polytope is $(n-1)^2$, so the sharpest bound is $(n-1)^2+1$ (a known result, **beyond the lecture**). The peeling algorithm gives $\le n^2$. For quizzes use the lecture's numbers.
 8. **Lecture timeline:** the lecture notes that the first lectures were recorded ~3 years before the later ones; some topics are repeated for continuity.
-9. **WM update detail:** the lecture introduces the update "if a mistake happens"; the standard form and the lower-bound step $w_{k^*}=(1-\epsilon)^{m^*}$ penalise every expert on every round it errs. See the note in §6.1.
+9. **WM update detail:** the lecture introduces the update "if a mistake happens"; the standard form and the lower-bound step $w_{k^{\ast}}=(1-\epsilon)^{m^{\ast}}$ penalise every expert on every round it errs. See the note in §6.1.
 10. **"Normalisation = $L_2$ projection":** the lecture says normalising $w$ gives the closest simplex point in the $L_2$ sense, and that Sinkhorn gives the closest doubly stochastic matrix in the Frobenius norm. Strictly, both are **KL (relative-entropy) projections**; the Euclidean projection onto the simplex is *not* plain normalisation. The "normalisation = projection" idea is what matters for the quiz. (Beyond the lecture.)
 11. **Lower bound $\mathbb E[\min(N_0,N_1)]=T/2-\Theta(\sqrt T)$** was stated without proof in the lecture, so it may not be examinable beyond the statement.
 
