@@ -49,7 +49,7 @@
 1. The adversary now reveals an entire **function**, which covers Hedge and any online ML problem.
 2. **Compare to BTL, not to the best fixed point:** BTL is *better* than every fixed $u$, so bounding FTL vs BTL also bounds FTL vs $u$.
 3. Regret of FTL is controlled by its **sensitivity** to one extra function.
-4. **Quadratic loss $\Rightarrow$ log regret** (strong curvature makes the adversary weak). **Linear loss $\Rightarrow$ FTL fails** (Hedge/$\sqrt T$ needed).
+4. **Quadratic loss $\Rightarrow$ log regret** (strong curvature makes the adversary weak). **Linear loss $\Rightarrow$ FTL fails** (Hedge$\sqrt T$ needed).
 5. Instability is the disease; **regularisation** is the cure.
 
 ---
@@ -207,6 +207,7 @@ $$f_t(w)=\tfrac12\lVert w-z_t\rVert^2 .$$
 (The $\tfrac12$ is only a normalising constant.)
 
 ### 9.2 What FTL plays: the running average
+
 $$
 w_t^{\text{FTL}}=\arg\min_w\sum_{i=1}^{t-1}\tfrac12\lVert w-z_i\rVert^2 .
 $$
@@ -222,24 +223,32 @@ Geometrically, it is the **centroid** of the points seen so far (the point minim
 Both $w_t^{\text{FTL}}$ and $w_{t+1}^{\text{FTL}}$ are **averages = convex combinations** of points in the ball of radius $L$, so they also lie in that ball: $\lVert w_t^{\text{FTL}}\rVert\le L$.
 
 ### 9.3 BTL as a moving average of FTL
+
 $$
 w_{t+1}=\frac1t\Big(\sum_{i=1}^{t-1}z_i+z_t\Big)=\frac{t-1}{t}\,w_t+\frac1t\,z_t .
 $$
+
 Only a $1/t$ weight goes to the new point: the extra function can pull the iterate **only a little, and less and less as $t$ grows**.
 
 ### 9.4 Per-round gap
 From $w_{t+1}=\frac{t-1}{t}w_t+\frac1tz_t$:
+
 $$
 w_{t+1}-z_t=\frac{t-1}{t}\,(w_t-z_t).
 $$
+
 Hence
+
 $$
 f_t(w_t)-f_t(w_{t+1})=\tfrac12\lVert w_t-z_t\rVert^2\Big(1-\frac{(t-1)^2}{t^2}\Big)=\tfrac12\lVert w_t-z_t\rVert^2\cdot\frac{2t-1}{t^2}.
 $$
+
 Using $2t-1\le2t$:
+
 $$
 f_t(w_t)-f_t(w_{t+1})\ \le\ \frac1t\,\lVert w_t-z_t\rVert^2 .
 $$
+
 Since $\lVert w_t\rVert\le L$ and $\lVert z_t\rVert\le L$, the triangle inequality gives $\lVert w_t-z_t\rVert\le2L$ (two points of the ball are at most a diameter apart), so $\lVert w_t-z_t\rVert^2\le4L^2$:
 
 $$
