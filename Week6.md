@@ -231,11 +231,11 @@ Let $L_t=\sum_{i\le t}z_i$ be the cumulative loss vector (to avoid writing sums)
 
 $$
 w_{t+1} =
-\mathop{\mathrm{arg\,min}}_{w \in \Delta_d}
-\left[
-\langle w, L_t \rangle
-+ \frac{1}{\eta}\sum_j w_j \ln w_j
-\right]
+\underset{w \in \Delta_d}{\mathrm{argmin}}
+\left(
+w^T L_t +
+\frac{1}{\eta}\sum_j w_j \ln(w_j)
+\right)
 $$
 
 $$
