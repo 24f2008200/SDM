@@ -310,13 +310,13 @@ $$
 \Omega(\sqrt{Td})
 $$
 
-*so EXP3 is optimal up to a factor of *
+*so EXP3 is optimal up to a factor of*
 
 $$
 \sqrt{\ln d}
 $$
 
-*.)*
+*)*
 
 ---
 
