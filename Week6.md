@@ -239,10 +239,7 @@ w^T L_t +
 $$
 
 $$
-\Delta_d =
-\left\{
-w : \sum_j w_j = 1,\; w_j \geq 0
-\right\}
+\Delta_d = \{ w : \sum_j w_j = 1,\; w_j \geq 0 \}
 $$
 
 The objective is convex, so the **KKT conditions** are necessary and sufficient.
@@ -434,15 +431,15 @@ By convexity,
 
 $$
 f(x^*) \geq f(x_t) +
-\nabla f(x_t)^T(x^*-x_t)
+\nabla f(x_t)^{T} (x^* - x_t)
 $$
 
 Therefore,
 
 $$
-f(x_t)-f(x^*)
+f(x_t) - f(x^*)
 \leq
-\nabla f(x_t)^T(x_t-x^*)
+\nabla f(x_t)^{T} (x_t - x^*)
 $$
 
 **Step 3: Replace the true gradient with the noisy one**
@@ -458,10 +455,9 @@ Hence,
 
 $$
 \mathbb{E}[
-\nabla f(x_t)^T(x_t-x^*)
-]=
+\nabla f(x_t)^{T} (x_t - x^*)]=
 \mathbb{E}[
-\tilde{z}_t^T(x_t-x^*)
+\tilde{z}_t^{T} (x_t - x^*)
 ]
 $$
 
