@@ -211,6 +211,7 @@ $$f_t(w)=\tfrac12\lVert w-z_t\rVert^2 .$$
 $$
 w_t^{\text{FTL}}=\arg\min_w\sum_{i=1}^{t-1}\tfrac12\lVert w-z_i\rVert^2 .
 $$
+
 Set the gradient to zero: $\sum_{i<t}(w-z_i)=0$, so
 
 $$
@@ -256,9 +257,11 @@ $$
 $$
 
 ### 9.5 Summing over rounds: harmonic series
+
 $$
 R_T(\text{FTL})\le\sum_{t=1}^T\frac{4L^2}{t}=4L^2H_T\le4L^2\,(1+\ln T),
 $$
+
 where $H_T=\sum_{t=1}^T\frac1t$ is the harmonic number.
 
 $$
@@ -331,9 +334,11 @@ $$
 
 * Idea from ML: when you want a model to have a property (here: *not move much*), **add a regulariser** to the objective.
 * **Follow the Regularised Leader (FTRL):**
+
 $$
 w_t=\arg\min_{w\in S}\Big[\sum_{i=1}^{t-1}f_i(w)+\text{regulariser}(w)\Big].
 $$
+
 (Only previewed in the lecture; its regret analysis is for the next lecture.)
 * Teaser questions: which regulariser? Does FTRL get good regret for **linear** losses? Can it reach $\log T$ like FTL on quadratics (which would make Hedge unnecessary)? **Do not assume the answers**; they were left open.
 * Background reminder: for linear losses on the simplex a $\Omega(\sqrt T)$ lower bound already exists (Weeks 1–4), so $\log T$ for linear losses on the simplex is not possible; the $\log T$ result needs curvature.
