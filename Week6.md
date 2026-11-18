@@ -254,7 +254,11 @@ $$
 **Stationarity** ($\partial\mathcal L/\partial w_j=0$; note $\frac{d}{dw}w\ln w=1+\ln w$):
 
 $$
-L_{t,j}+\frac1\eta\big(1+\ln w_j\big)+\lambda-\beta_j=0\qquad\forall j.\tag{1}
+L_{t,j}
++\frac{1}{\eta}(1+\ln w_j)
++\lambda-\beta_j=0
+\quad \text{for all } j
+\qquad (1)
 $$
 
 **Complementary slackness:** $\lambda(\sum_jw_j-1)=0$ and $\beta_jw_j=0$ for all $j$.
