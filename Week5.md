@@ -268,7 +268,7 @@ $$
 
 ### 10.1 Setting (1-D)
 * $S=[-1,1]$, adversary picks $z_t\in[-1,1]$, loss $f_t(w)=z_t\,w$ (linear in $w$).
-* FTL: $w_t=\arg\min_{w\in[-1,1]}\ w\sum_{i<t}z_i$. A linear function over an interval is minimised at an **endpoint**: $w_t=-\operatorname{sign}\big(\sum_{i<t}z_i\big)$ (and $0$, say, if the sum is $0$, e.g. $t=1$).
+* FTL: $w_t=\arg\min_{w\in[-1,1]}\ w\sum_{i<t}z_i$. A linear function over an interval is minimised at an **endpoint**: $w_t=-\mathrm{sign}\big(\sum_{i<t}z_i\big)$ (and $0$, say, if the sum is $0$, e.g. $t=1$).
 * BTL: same, but with $\sum_{i\le t}z_i$.
 
 ### 10.2 The adversary's strategy (adversary hat)
@@ -384,7 +384,7 @@ $$
 ### 14.4 Quick numeric practice patterns
 * Given $L$ and $T$: bound $=4L^2(1+\ln T)$. E.g. $L=2,\,T=5000$: $\approx152$.
 * Given $z_1,\dots,z_{t-1}$: FTL's play is their mean; BTL's is the mean including $z_t$.
-* Given a linear sequence on $[-1,1]$: FTL plays $-\operatorname{sign}(\text{running sum})$; BTL plays $-\operatorname{sign}(\text{running sum incl. current})$.
+* Given a linear sequence on $[-1,1]$: FTL plays $-\mathrm{sign}(\text{running sum})$; BTL plays $-\mathrm{sign}(\text{running sum incl. current})$.
 * Verify: FTL loss $=T-1$, BTL loss $=-T+0.5$ for the lecture's sequence.
 
 ---
