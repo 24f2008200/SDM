@@ -252,15 +252,19 @@ $$
 $$
 
 **Stationarity** ($\partial\mathcal L/\partial w_j=0$; note $\frac{d}{dw}w\ln w=1+\ln w$):
+
 $$
 L_{t,j}+\frac1\eta\big(1+\ln w_j\big)+\lambda-\beta_j=0\qquad\forall j.\tag{1}
 $$
+
 **Complementary slackness:** $\lambda(\sum_jw_j-1)=0$ and $\beta_jw_j=0$ for all $j$.
 
 For every $j$ with $w_j>0$, complementary slackness forces $\beta_j=0$, so (1) gives
+
 $$
 \ln w_j=-\eta\lambda-\eta L_{t,j}-1\ \Longrightarrow\ w_j=e^{-\eta L_{t,j}}\cdot e^{-\eta\lambda-1}.
 $$
+
 The factor $e^{-\eta\lambda-1}$ is the same for every $j$: it is a **normaliser**. Impose $\sum_jw_j=1$:
 
 $$
@@ -271,6 +275,7 @@ $$
 
 ### 7.4 Recursive form: the Hedge update
 Since $L_{t,j}=L_{t-1,j}+z_{t,j}$:
+
 $$
 w_{t+1,j}=\frac{e^{-\eta L_{t-1,j}}\,e^{-\eta z_{t,j}}}{\sum_ie^{-\eta L_{t,i}}}
 \ \propto\ w_{t,j}\,e^{-\eta z_{t,j}}.
@@ -280,6 +285,7 @@ In Hedge terms: multiply each (unnormalised) weight by $e^{-\eta z_{t,j}}$ and *
 > **Careful with the lecture's notation:** here the *normalised* probability vector is called $w_t$ (the FTRL iterate), whereas in Hedge $w$ denoted the *unnormalised* weights and $p=w/\Phi$ the probabilities. $\Phi_t=\sum_iw_{t,i}$ plays the role of the normaliser.
 
 ### 7.5 Conclusion
+
 $$
 \boxed{\ \text{FTRL with entropic regulariser on the simplex}\ =\ \text{Hedge}\ }
 $$
