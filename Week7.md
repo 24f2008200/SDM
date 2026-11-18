@@ -300,7 +300,17 @@ $$
 
 **Reading the result:** sublinear in $T$ (regret $T\to0$), so EXP3 is a **no-regret algorithm for adversarial bandits**. Compared with Hedge ($\sqrt{2T\ln d}$, for $\ell\in[0,1]$) it pays an extra factor $\mathbf{\sqrt d}$. (The lecture says "extra $d$ factor" loosely: it is $d$ inside the square root.)
 
-**Lower bound.** The lecture says one can show that $\sqrt T$ cannot be improved (no proof given). *(Beyond the lecture: the minimax lower bound is $\Omega(\sqrt{Td})$, so EXP3 is optimal up to $\sqrt{\ln d}$.)*
+**Lower bound.**
+
+The lecture says one can show that $\sqrt{T}$ cannot be improved (no proof given).
+
+*(Beyond the lecture: the minimax lower bound is*
+
+$$
+\Omega(\sqrt{Td})
+$$
+
+*so EXP3 is optimal up to a factor of $\sqrt{\ln d}$.)*
 
 ---
 
