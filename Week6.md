@@ -97,7 +97,9 @@ $$
 **Choosing the first point.** In round 1 FTRL has already "seen" $R$, so $w_1=\arg\min_wR(w)$. Regularisers are typically non-negative norms with minimum $0$, so we can take $R(w_1)=0$:
 
 $$
-R_T(u)\le R(u)+\sum_{t=1}^T\big[f_t(w_t)-f_t(w_{t+1})\big].\tag{A}
+R_T(u) \leq R(u) + \sum_{t=1}^{T}
+\left[f_t(w_t) - f_t(w_{t+1})\right]
+\qquad (A)
 $$
 
 Meaning: **regret = (price of the regulariser at the comparator) + (sensitivity of the algorithm to one extra function)**. Regularisation trades a penalty $R(u)$ for stability.
@@ -156,13 +158,19 @@ $$
 **Optimising $\eta$:** $\dfrac{d}{d\eta}=-\dfrac{B^2}{2\eta^2}+L^2T=0\Rightarrow\eta^2=\dfrac{B^2}{2L^2T}$:
 
 $$
-\boxed{\ \eta^*=\frac{B}{L\sqrt{2T}}\ },\qquad
-\frac{B^2}{2\eta^*}=\frac{BL\sqrt{2T}}{2}=\frac{BL\sqrt T}{\sqrt2},\quad
-\eta^*L^2T=\frac{BL\sqrt T}{\sqrt2}
+\boxed{\eta^* = \frac{B}{L\sqrt{2T}}}
 $$
 
 $$
-\boxed{\ R_T\le\sqrt2\,BL\sqrt T=O(BL\sqrt T)\ }
+\frac{B^2}{2\eta^*}= \frac{BL\sqrt{2T}}{2}= \frac{BL\sqrt{T}}{\sqrt{2}}
+$$
+
+$$
+\eta^* L^2 T= \frac{BL\sqrt{T}}{\sqrt{2}}
+$$
+
+$$
+\boxed{R_T \leq \sqrt{2}\,BL\sqrt{T} = O(BL\sqrt{T})}
 $$
 
 (The two terms are equal at the optimum, as for Hedge.) **Sublinear regret for linear losses**: adding just *one* quadratic function at the start is enough. It is not $O(\log T)$, because the adversary is still linear.
@@ -222,8 +230,19 @@ $$
 Let $L_t=\sum_{i\le t}z_i$ be the cumulative loss vector (to avoid writing sums). In round $t+1$:
 
 $$
-w_{t+1}=\arg\min_{w\in\Delta_d}\ \Big[\langle w,L_t\rangle+\frac1\eta\sum_jw_j\ln w_j\Big],\quad
-\Delta_d=\Big\{w:\ \sum_jw_j=1,\ w_j\ge0\Big\}.
+w_{t+1} =
+\mathop{\mathrm{arg\,min}}_{w \in \Delta_d}
+\left[
+\langle w, L_t \rangle
++ \frac{1}{\eta}\sum_j w_j \ln w_j
+\right]
+$$
+
+$$
+\Delta_d =
+\left\{
+w : \sum_j w_j = 1,\; w_j \geq 0
+\right\}
 $$
 
 The objective is convex, so the **KKT conditions** are necessary and sufficient.
@@ -398,25 +417,73 @@ Let $x^*=\arg\min_xf(x)$.
 
 **Step 1: Jensen.** $f$ convex $\Rightarrow$ $f\big(\frac1T\sum_tx_t\big)\le\frac1T\sum_tf(x_t)$ (the function at an average is at most the average of the function values; "chords lie above a convex function"). So
 
+
+**Step 1: Jensen's inequality**
+
 $$
-\mathbb E\big[f(\bar x_T)\big]-f(x^*)\le\frac1T\,\mathbb E\Big[\sum_{t=1}^T\big(f(x_t)-f(x^*)\big)\Big].
+\mathbb{E}[f(\bar{x}_T)] - f(x^*)
+\leq
+\frac{1}{T}\mathbb{E}\left[
+\sum_{t=1}^{T}(f(x_t)-f(x^*))
+\right]
 $$
 
-**Step 2: convexity (tangent at $x_t$).** $f(x^*)\ge f(x_t)+\langle\nabla f(x_t),x^*-x_t\rangle$, i.e.
+**Step 2: Convexity (tangent at $x_t$)**
+
+By convexity,
+
 $$
-f(x_t)-f(x^*)\le\langle\nabla f(x_t),\,x_t-x^*\rangle .
+f(x^*) \geq f(x_t) +
+\nabla f(x_t)^T(x^*-x_t)
 $$
 
-**Step 3: replace the true gradient by the noisy one.** Given the past, $x_t$ is fixed and the fresh sample is independent of the past, so $\mathbb E[\tilde z_t\mid x_t]=\nabla f(x_t)$. Hence
+Therefore,
+
 $$
-\mathbb E\big[\langle\nabla f(x_t),x_t-x^*\rangle\big]=\mathbb E\big[\langle\tilde z_t,x_t-x^*\rangle\big].
+f(x_t)-f(x^*)
+\leq
+\nabla f(x_t)^T(x_t-x^*)
 $$
+
+**Step 3: Replace the true gradient with the noisy one**
+
+Given the past, $x_t$ is fixed and the fresh sample is independent of the past. Therefore,
+
+$$
+\mathbb{E}[\tilde{z}_t \mid x_t]=
+\nabla f(x_t)
+$$
+
+Hence,
+
+$$
+\mathbb{E}[
+\nabla f(x_t)^T(x_t-x^*)
+]=
+\mathbb{E}[
+\tilde{z}_t^T(x_t-x^*)
+]
+$$
+
 (Rigorous version: conditional expectations / filtrations; the lecture gives the idea.)
 
-**Step 4: regret bound.** Sum over $t$ and apply §12.3:
+**Step 4: Regret bound**
+
+Summing over $t$ and applying Section 12.3,
+
 $$
-\mathbb E\big[f(\bar x_T)\big]-f(x^*)\le\frac1T\,\mathbb E\Big[\sum_t\langle\tilde z_t,x_t-x^*\rangle\Big]\le\frac{\sqrt2\,BL\sqrt T}{T}.
+\begin{aligned}
+\mathbb{E}[f(\bar{x}_T)]-f(x^*)
+&\leq
+\frac{1}{T}\mathbb{E}\left[
+\sum_{t=1}^{T}
+\tilde{z}_t^T(x_t-x^*)
+\right] \\
+&\leq
+\frac{\sqrt{2}BL\sqrt{T}}{T}
+\end{aligned}
 $$
+
 
 $$
 \boxed{\ \mathbb E\big[f(\bar x_T)\big]-f(x^*)\le\frac{\sqrt2\,BL}{\sqrt T}=O\Big(\frac1{\sqrt T}\Big)\ }
