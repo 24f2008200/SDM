@@ -37,14 +37,14 @@
 | **Round-zero trick** | FTRL $=$ FTL on the sequence $f_0=R,f_1,f_2,\dots$ where the *learner* (not the adversary) chooses $f_0$ |
 | **Generic bound** | $R_T(u)\le R(u)-R(w_1)+\sum_{t=1}^T[f_t(w_t)-f_t(w_{t+1})]$ |
 | **$L_2$ regulariser, linear loss** | $R(w)=\frac1{2\eta}\lVert w\rVert^2\ \Rightarrow\ w_{t+1}=w_t-\eta z_t$ (**online gradient descent**) |
-| **Regret ($L_2$)** | $\le\frac{\lVert u\rVert^2}{2\eta}+\eta\sum_t\lVert z_t\rVert^2\le\frac{B^2}{2\eta}+\eta L^2T$; with $\eta^{*}=\frac{B}{L\sqrt{2T}}$: $\ \sqrt2\,BL\sqrt T=O(\sqrt T)$ |
+| **Regret ($L_2$)** | $\le\frac{\lVert u\rVert^2}{2\eta}+\eta\sum_t\lVert z_t\rVert^2\le\frac{B^2}{2\eta}+\eta L^2T$; with $\eta^{\ast}=\frac{B}{L\sqrt{2T}}$: $\ \sqrt2\,BL\sqrt T=O(\sqrt T)$ |
 | **Hedge setting with $L_2$** | simplex $\subset$ unit ball ($B=1$), hypercube $[-1,1]^d$ needs $L=\sqrt d$ $\Rightarrow$ $O(\sqrt{Td})$, **exponentially worse in $d$** than Hedge's $O(\sqrt{T\ln d})$ |
 | **Why** | The regulariser's geometry ($L_2$ balls) does not match the simplex; probabilities should be compared by **entropy** |
 | **Entropic regulariser** | $R(w)=\frac1\eta\sum_iw_i\ln w_i$ on $\Delta_d$ $\Rightarrow$ $w_{t+1,j}=\dfrac{e^{-\eta L_{t,j}}}{\sum_ie^{-\eta L_{t,i}}}$ $=$ **Hedge** exactly |
 | **OCO** | $f_t$ convex. Regret $\le$ regret of the linear game with $z_t\in\partial f_t(w_t)$ |
 | **Online (sub)gradient descent** | $w_{t+1}=w_t-\eta z_t$, $z_t\in\partial f_t(w_t)$; regret $O(BL\sqrt T)$ for any convex $L$-Lipschitz losses |
 | **Strongly convex losses** | regret improves to $O(\log T)$ (stated, not proved) |
-| **SGD** | SGD $=$ online gradient descent with noisy gradients and the same $f$ every round; $\mathbb E[f(\bar x_T)]-f(x^{*})=O(1/\sqrt T)$ |
+| **SGD** | SGD $=$ online gradient descent with noisy gradients and the same $f$ every round; $\mathbb E[f(\bar x_T)]-f(x^{\ast})=O(1/\sqrt T)$ |
 
 **Five ideas to remember**
 1. **Regularisation = stability.** One extra quadratic term at "round zero" makes each step a small gradient step instead of an endpoint flip.
@@ -158,15 +158,15 @@ $$
 **Optimising $\eta$:** $\dfrac{d}{d\eta}=-\dfrac{B^2}{2\eta^2}+L^2T=0\Rightarrow\eta^2=\dfrac{B^2}{2L^2T}$:
 
 $$
-\boxed{\eta^{*} = \frac{B}{L\sqrt{2T}}}
+\boxed{\eta^{\ast} = \frac{B}{L\sqrt{2T}}}
 $$
 
 $$
-\frac{B^2}{2\eta^{*}}= \frac{BL\sqrt{2T}}{2}= \frac{BL\sqrt{T}}{\sqrt{2}}
+\frac{B^2}{2\eta^{\ast}}= \frac{BL\sqrt{2T}}{2}= \frac{BL\sqrt{T}}{\sqrt{2}}
 $$
 
 $$
-\eta^{*} L^2 T= \frac{BL\sqrt{T}}{\sqrt{2}}
+\eta^{\ast} L^2 T= \frac{BL\sqrt{T}}{\sqrt{2}}
 $$
 
 $$
@@ -175,7 +175,7 @@ $$
 
 (The two terms are equal at the optimum, as for Hedge.) **Sublinear regret for linear losses**: adding just *one* quadratic function at the start is enough. It is not $O(\log T)$, because the adversary is still linear.
 
-$\eta^{*}$ depends on $B$, $L$ and $T$. For an unknown horizon use the **doubling trick**, as before.
+$\eta^{\ast}$ depends on $B$, $L$ and $T$. For an unknown horizon use the **doubling trick**, as before.
 
 ### 5.3 Remarks the lecture made
 * **Improper learning.** The learner $w_t=-\eta\sum z_i$ may have norm larger than $B$; only the *comparator* is restricted to $\lVert u\rVert\le B$. When the learner plays from a larger class than the comparator, it is called **improper learning**. (Consequently measured regret can even be negative, see the code.)
@@ -383,7 +383,7 @@ $$
 Assume $\lVert z_t\rVert\le L$ for all $t$ (**gradients bounded**; this is a **Lipschitz** condition: the function cannot change too fast) and compare to $\lVert u\rVert\le B$. By §5:
 
 $$
-\boxed{\ R_T(\text{OGD})\le\sqrt2\,BL\sqrt T=O(BL\sqrt T)\quad\text{with }\eta^{*}=\frac{B}{L\sqrt{2T}}\ }
+\boxed{\ R_T(\text{OGD})\le\sqrt2\,BL\sqrt T=O(BL\sqrt T)\quad\text{with }\eta^{\ast}=\frac{B}{L\sqrt{2T}}\ }
 $$
 
 **One algorithm, any convex loss sequence** (hinge, logistic, exponential, squared, ...), as long as gradients are bounded.
@@ -418,14 +418,14 @@ x_{t+1}=x_t-\eta\,\tilde z_t,\qquad \tilde z_t\ \text{noisy gradient at }x_t,\qq
 $$
 
 ### 12.3 Viewing SGD as OGD
-SGD is online gradient descent where (i) the adversary plays the **same** $f$ every round, and (ii) the linear loss vector is the noisy gradient $\tilde z_t$. The linear-game regret bound holds for **any** sequence $\tilde z_t$ (it never used that they are gradients), so with $\lVert\tilde z_t\rVert\le L$ and $\lVert x^{*}\rVert\le B$:
+SGD is online gradient descent where (i) the adversary plays the **same** $f$ every round, and (ii) the linear loss vector is the noisy gradient $\tilde z_t$. The linear-game regret bound holds for **any** sequence $\tilde z_t$ (it never used that they are gradients), so with $\lVert\tilde z_t\rVert\le L$ and $\lVert x^{\ast}\rVert\le B$:
 
 $$
-\sum_{t=1}^T\langle x_t-x^{*},\tilde z_t\rangle\le\sqrt2\,BL\sqrt T\qquad\text{(for every realisation)}.
+\sum_{t=1}^T\langle x_t-x^{\ast},\tilde z_t\rangle\le\sqrt2\,BL\sqrt T\qquad\text{(for every realisation)}.
 $$
 
 ### 12.4 Analysis
-Let $x^{*}=\arg\min_xf(x)$.
+Let $x^{\ast}=\arg\min_xf(x)$.
 
 **Step 1: Jensen.** $f$ convex $\Rightarrow$ $f\big(\frac1T\sum_tx_t\big)\le\frac1T\sum_tf(x_t)$ (the function at an average is at most the average of the function values; "chords lie above a convex function"). So
 
@@ -433,10 +433,10 @@ Let $x^{*}=\arg\min_xf(x)$.
 **Step 1: Jensen's inequality**
 
 $$
-\mathbb{E}[f(\bar{x}_T)] - f(x^{*})
+\mathbb{E}[f(\bar{x}_T)] - f(x^{\ast})
 \leq
 \frac{1}{T}\mathbb{E}\left[
-\sum_{t=1}^{T}(f(x_t)-f(x^{*}))
+\sum_{t=1}^{T}(f(x_t)-f(x^{\ast}))
 \right]
 $$
 
@@ -445,16 +445,16 @@ $$
 By convexity,
 
 $$
-f(x^{*}) \geq f(x_t) +
-\nabla f(x_t)^{T} (x^{*} - x_t)
+f(x^{\ast}) \geq f(x_t) +
+\nabla f(x_t)^{T} (x^{\ast} - x_t)
 $$
 
 Therefore,
 
 $$
-f(x_t) - f(x^{*})
+f(x_t) - f(x^{\ast})
 \leq
-\nabla f(x_t)^{T} (x_t - x^{*})
+\nabla f(x_t)^{T} (x_t - x^{\ast})
 $$
 
 **Step 3: Replace the true gradient with the noisy one**
@@ -470,9 +470,9 @@ Hence,
 
 $$
 \mathbb{E}[
-\nabla f(x_t)^{T} (x_t - x^{*})]=
+\nabla f(x_t)^{T} (x_t - x^{\ast})]=
 \mathbb{E}[
-\tilde{z}_t^{T} (x_t - x^{*})
+\tilde{z}_t^{T} (x_t - x^{\ast})
 ]
 $$
 
@@ -484,11 +484,11 @@ Summing over $t$ and applying Section 12.3,
 
 $$
 \begin{aligned}
-\mathbb{E}[f(\bar{x}_T)]-f(x^{*})
+\mathbb{E}[f(\bar{x}_T)]-f(x^{\ast})
 &\leq
 \frac{1}{T}\mathbb{E}\left[
 \sum_{t=1}^{T}
-\tilde{z}_t^T(x_t-x^{*})
+\tilde{z}_t^T(x_t-x^{\ast})
 \right] \\
 &\leq
 \frac{\sqrt{2}BL\sqrt{T}}{T}
@@ -497,7 +497,7 @@ $$
 
 
 $$
-\boxed{\ \mathbb E\big[f(\bar x_T)\big]-f(x^{*})\le\frac{\sqrt2\,BL}{\sqrt T}=O\Big(\frac1{\sqrt T}\Big)\ }
+\boxed{\ \mathbb E\big[f(\bar x_T)\big]-f(x^{\ast})\le\frac{\sqrt2\,BL}{\sqrt T}=O\Big(\frac1{\sqrt T}\Big)\ }
 $$
 
 ### 12.5 Takeaways
@@ -523,7 +523,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 | 4 | FTRL-$L_2$, linear loss | $w_t=-\eta\sum_{i<t}z_i$, $\ w_{t+1}=w_t-\eta z_t$ | OGD |
 | 5 | Sensitivity term | $f_t(w_t)-f_t(w_{t+1})=\eta\lVert z_t\rVert^2$ | |
 | 6 | Regret ($L_2$) | $R_T\le\frac{\lVert u\rVert^2}{2\eta}+\eta\sum\lVert z_t\rVert^2\le\frac{B^2}{2\eta}+\eta L^2T$ | $\lVert z_t\rVert\le L$, $\lVert u\rVert\le B$ |
-| 7 | Optimal $\eta$ | $\eta^{*}=\frac{B}{L\sqrt{2T}}$ | from $-\frac{B^2}{2\eta^2}+L^2T=0$ |
+| 7 | Optimal $\eta$ | $\eta^{\ast}=\frac{B}{L\sqrt{2T}}$ | from $-\frac{B^2}{2\eta^2}+L^2T=0$ |
 | 8 | Tuned regret | $R_T\le\sqrt2\,BL\sqrt T$ | both terms equal $\frac{BL\sqrt T}{\sqrt2}$ |
 | 9 | Hedge via $L_2$-FTRL | $B=1$, $L=\sqrt d$ $\Rightarrow$ $O(\sqrt{Td})$ | vs Hedge $O(\sqrt{T\ln d})$ |
 | 10 | Norms on simplex | corners $\lVert e_i\rVert=1$; centre $\lVert\cdot\rVert=1/\sqrt d$ | simplex $\subset$ unit ball |
@@ -538,7 +538,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 | 19 | Online (sub)gradient descent | $w_{t+1}=w_t-\eta z_t$ | regret $\sqrt2BL\sqrt T$ |
 | 20 | Jensen | $f\big(\sum\lambda_ix_i\big)\le\sum\lambda_if(x_i)$ | convex $f$, $\lambda\in\Delta$ |
 | 21 | SGD step | $x_{t+1}=x_t-\eta\tilde z_t$, $\mathbb E[\tilde z_t\mid x_t]=\nabla f(x_t)$ | output $\bar x_T=\frac1T\sum x_t$ |
-| 22 | SGD guarantee | $\mathbb E f(\bar x_T)-f(x^{*})\le\frac{\sqrt2BL}{\sqrt T}$ | $O(1/\sqrt T)$ |
+| 22 | SGD guarantee | $\mathbb E f(\bar x_T)-f(x^{\ast})\le\frac{\sqrt2BL}{\sqrt T}$ | $O(1/\sqrt T)$ |
 | 23 | Rates summary | quadratic/strongly convex $O(\log T)$; linear/convex $O(\sqrt T)$; simplex+entropy $O(\sqrt{T\ln d})$ | |
 
 ---
@@ -555,7 +555,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 
 ### 15.2 Derivations likely to be asked
 1. **FTRL-$L_2$ closed form** and the OGD recursion (gradient $=0$).
-2. **Regret bound** $\frac{B^2}{2\eta}+\eta L^2T$ and $\eta^{*}$, final $\sqrt2BL\sqrt T$.
+2. **Regret bound** $\frac{B^2}{2\eta}+\eta L^2T$ and $\eta^{\ast}$, final $\sqrt2BL\sqrt T$.
 3. **Hedge-setting comparison:** compute $L=\sqrt d$, $B=1$; state $\sqrt{Td}$ vs $\sqrt{T\ln d}$.
 4. **Entropic FTRL $\Rightarrow$ Hedge** (KKT: stationarity, $\beta_j=0$ on the support, normalise).
 5. **OCO linearisation** (tangent inequality, then sum).
@@ -575,7 +575,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 * **$\sqrt T$ for general convex is unimprovable** (linear functions are convex).
 
 ### 15.4 Quick numeric practice patterns
-* Given $B,L,T$: $\eta^{*}=\frac{B}{L\sqrt{2T}}$ and regret $\sqrt2BL\sqrt T$. E.g. $B=1,L=1,T=4000$: $\eta^{*}\approx0.0112$, bound $\approx89.4$.
+* Given $B,L,T$: $\eta^{\ast}=\frac{B}{L\sqrt{2T}}$ and regret $\sqrt2BL\sqrt T$. E.g. $B=1,L=1,T=4000$: $\eta^{\ast}\approx0.0112$, bound $\approx89.4$.
 * Given $d,T$: compare $\sqrt{2dT}$ with $\sqrt{2T\ln d}$ (e.g. $d=1000$, $T=10^4$: $4472$ vs $372$).
 * Given cumulative losses $L_t$ and $\eta$: the entropic-FTRL point is $\text{softmax}(-\eta L_t)$.
 * SGD error after $T$ steps: $\sqrt2BL/\sqrt T$; to halve it you need $4\times$ more steps.
@@ -594,7 +594,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 **A.** $w_t=-\eta\sum_{i<t}z_i$, i.e. $w_{t+1}=w_t-\eta z_t$ (online gradient descent).
 
 **Q4.** Derive the regret bound and optimal $\eta$.
-**A.** Sensitivity $=\eta\lVert z_t\rVert^2\le\eta L^2$; regret $\le\frac{B^2}{2\eta}+\eta L^2T$; $\eta^{*}=\frac{B}{L\sqrt{2T}}$; regret $\le\sqrt2BL\sqrt T$.
+**A.** Sensitivity $=\eta\lVert z_t\rVert^2\le\eta L^2$; regret $\le\frac{B^2}{2\eta}+\eta L^2T$; $\eta^{\ast}=\frac{B}{L\sqrt{2T}}$; regret $\le\sqrt2BL\sqrt T$.
 
 **Q5.** What is improper learning here?
 **A.** The learner's iterates $-\eta\sum z_i$ may leave the $B$-ball while the comparator class is restricted to it.
@@ -621,7 +621,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 **A.** Linear functions are convex, and for linear losses $\Omega(\sqrt T)$ regret is unavoidable. Better rates need curvature (strong convexity $\Rightarrow$ $\log T$).
 
 **Q13.** Prove SGD's $O(1/\sqrt T)$ guarantee in outline.
-**A.** Jensen on $\bar x_T$ $\Rightarrow$ average of $f(x_t)-f(x^{*})$ $\Rightarrow$ tangent bound by $\langle\nabla f(x_t),x_t-x^{*}\rangle$ $\Rightarrow$ replace gradient by noisy gradient (unbiased) $\Rightarrow$ OGD regret $\sqrt2BL\sqrt T$ divided by $T$.
+**A.** Jensen on $\bar x_T$ $\Rightarrow$ average of $f(x_t)-f(x^{\ast})$ $\Rightarrow$ tangent bound by $\langle\nabla f(x_t),x_t-x^{\ast}\rangle$ $\Rightarrow$ replace gradient by noisy gradient (unbiased) $\Rightarrow$ OGD regret $\sqrt2BL\sqrt T$ divided by $T$.
 
 **Q14.** Why average the iterates in SGD?
 **A.** Jensen is applied to the average; the guarantee is for $f(\bar x_T)$ (the last iterate is not covered by this argument).
@@ -638,7 +638,7 @@ Part 1 (full-information online learning) ends here. Part 2: **partial informati
 3. **Notation:** the transcript writes the step/regularisation parameter as "ea" ($\eta$). The regulariser $\frac1{2\eta}\lVert w\rVert^2$ is "$\frac1{2\,\text{ea}}$". In the entropic derivation the *normalised* iterate is called $w$ (unlike Hedge's unnormalised weights).
 4. **Entropic regulariser sign/wording:** the lecture says "penalise the negative of uncertainty". Precisely $R(w)=+\frac1\eta\sum w\ln w$ is the **negative entropy** (convex).
 5. **Losses in $[-1,1]$:** the Hedge comparison uses the hypercube $[-1,1]^d$, whereas earlier Hedge was analysed for $\ell\in[0,B]$. The rate $O(\sqrt{T\ln d})$ is unchanged (only constants and a condition like $\eta\le1$ differ). *Beyond the lecture.*
-6. **SGD analysis assumptions not stated aloud:** one needs bounded noisy gradients $\lVert\tilde z_t\rVert\le L$ and $\lVert x^{*}\rVert\le B$ to invoke $\sqrt2BL\sqrt T$; independence of the fresh sample from the past (filtrations) is only hand-waved. The lecture also writes "$x_{t+1}=x_t-\text{step}\cdot\tilde z$" with the step $\eta$ set as in §5.
+6. **SGD analysis assumptions not stated aloud:** one needs bounded noisy gradients $\lVert\tilde z_t\rVert\le L$ and $\lVert x^{\ast}\rVert\le B$ to invoke $\sqrt2BL\sqrt T$; independence of the fresh sample from the past (filtrations) is only hand-waved. The lecture also writes "$x_{t+1}=x_t-\text{step}\cdot\tilde z$" with the step $\eta$ set as in §5.
 7. **Convexity statement at boundaries:** the "$\forall w\,\exists z$" definition is the standard subgradient characterisation for convex functions on convex sets; at boundary points of $S$ a subgradient may fail to exist for some convex functions. Not an issue for $S=\mathbb R^d$ or for the examples in the course. *Beyond the lecture.*
 8. **Projected OGD and strongly convex $\log T$ results** are stated without proof; treat them as facts to recall, not to derive.
 9. **Transcript noise:** several passages (e.g. the drawing of the tangent-line picture, and the sentence "FTRL with quadratic regularisation... $\sqrt{T d B}$") are partly garbled; the notes give the clean versions.
