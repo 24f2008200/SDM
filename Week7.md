@@ -186,11 +186,26 @@ Initialise $w_{1,i}=1$ for all $i$. For $t=1,\dots,T$:
 1. $p_t=\dfrac{w_t}{\lVert w_t\rVert_1}$ (normalised weights; $\lVert w_t\rVert_1=\sum_iw_{t,i}$).
 2. Draw $I_t\sim p_t$ and observe $\ell_{t,I_t}\in[0,1]$.
 3. Build $\hat\ell_t$ as in §7.2.
-4. **Hedge update:** $\ w_{t+1,i}=w_{t,i}\,e^{-\eta\,\hat\ell_{t,i}}\ $ for all $i$.
+4. **Hedge update:**
+   
+$$
+w_{t+1,i} = w_{t,i} e^{-\eta \hat{\ell}_{t,i}}
+\quad \text{for all } i.
+$$
 
 Equivalently, since $\hat\ell_{t,i}=0$ for $i\ne I_t$:
+
 $$
-w_{t+1,i}=w_{t,i}\ (i\ne I_t),\qquad w_{t+1,I_t}=w_{t,I_t}\exp\Big(-\eta\,\frac{\ell_{t,I_t}}{p_{t,I_t}}\Big).
+w_{t+1,i} = w_{t,i}
+\quad (i \neq I_t)
+$$
+
+$$
+w_{t+1,I_t} =
+w_{t,I_t}
+\exp\left(
+-\eta \frac{\ell_{t,I_t}}{p_{t,I_t}}
+\right)
 $$
 
 (Losses in $[0,1]$ here; any bound $[0,B]$ only rescales constants.)
@@ -205,7 +220,14 @@ It *is* Hedge, with the true loss vector replaced by an unbiased estimate; it is
 Recall Hedge (Week 1–4 §13), valid for **any non-negative loss vectors** $\hat\ell_t$ and any $q\in\Delta_d$:
 
 $$
-\sum_{t=1}^T\langle p_t,\hat\ell_t\rangle-\sum_{t=1}^T\langle q,\hat\ell_t\rangle\ \le\ \frac{\ln d}{\eta}+\frac\eta2\sum_{t=1}^T\sum_{i=1}^dp_{t,i}\,\hat\ell_{t,i}^{\,2}.\tag{A}
+\sum_{t=1}^{T}\sum_{i=1}^{d} p_{t,i}\hat{\ell}_{t,i}-
+\sum_{t=1}^{T}\sum_{i=1}^{d} q_i\hat{\ell}_{t,i}
+\leq
+\frac{\ln(d)}{\eta}+
+\frac{\eta}{2}
+\sum_{t=1}^{T}\sum_{i=1}^{d}
+p_{t,i}(\hat{\ell}_{t,i})^2
+\qquad (A)
 $$
 
 (The proof only used $e^{-x}\le1-x+\frac{x^2}2$ for $x\ge0$, true for any non-negative loss, however large.)
@@ -223,9 +245,22 @@ The regret is an expectation, so take $\mathbb E$ of (A) (over all randomness). 
 * For a fixed $q$ (non-random), $\mathbb E\langle q,\hat\ell_t\rangle=\langle q,\ell_t\rangle$ (the loss matrix is fixed in advance, so $\ell_t$ is not random).
 
 So
+
 $$
-\mathbb E\sum_t\langle p_t,\ell_t\rangle-\sum_t\langle q,\ell_t\rangle\ \le\ \frac{\ln d}{\eta}+\frac\eta2\sum_t\mathbb E\Big[\sum_ip_{t,i}\hat\ell_{t,i}^2\Big].\tag{B}
+\mathbb{E}\left[
+\sum_{t=1}^{T}\sum_{i=1}^{d}p_{t,i}\ell_{t,i}
+\right]-
+\sum_{t=1}^{T}\sum_{i=1}^{d}q_i\ell_{t,i}
+\leq
+\frac{\ln(d)}{\eta}+
+\frac{\eta}{2}
+\sum_{t=1}^{T}
+\mathbb{E}\left[
+\sum_{i=1}^{d}p_{t,i}(\hat{\ell}_{t,i})^2
+\right]
+\qquad (B)
 $$
+
 The left side, with $q=e_i$ for the best arm $i$, is exactly the bandit regret $R_T$.
 
 ### 9.3 The key computation: the probabilities cancel
@@ -246,10 +281,13 @@ $$
 (since each $\ell_{t,i}\in[0,1]$). The unbounded $\hat\ell$ is tamed *in expectation* because the $p$ in the denominator is cancelled by the $p$'s that multiply it (one from the weight $p_{t,i}$ in the inner product, one from the probability of drawing $i$).
 
 ### 9.4 Plug in and tune $\eta$
+
 $$
 \boxed{\ R_T\le\frac{\ln d}{\eta}+\frac{\eta}{2}\,T\,d\ }
 $$
+
 Minimise over $\eta$:
+
 $$
 -\frac{\ln d}{\eta^2}+\frac{Td}{2}=0\ \Rightarrow\ \eta^*=\sqrt{\frac{2\ln d}{Td}} .
 $$
