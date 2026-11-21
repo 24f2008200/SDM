@@ -240,3 +240,66 @@ $$R_4 = (0.8 + 0.9 + 0.4 + 0.2) - \min(1.8,\ 1.8,\ 2.4) = 2.3 - 1.8 = 0.5$$
 4. **Hedge would behave differently.** With full information it would have seen all three losses each round, and $L_4 = (1.8, 1.8, 2.4)$ would have pushed weight away from action 3 immediately.
 
 If you'd like, I can append this example to the GitHub `.md` file, or rerun it with a different $\eta$ or different sampled actions.
+
+
+--------
+
+# Hedge vs. Exp3: What's Shared and What's Different
+
+Your picture is right, with two refinements:
+
+- The scaling is by **$1/p$**, not $p$. That is what makes $\langle p_t, \hat\ell_t\rangle$ equal the loss you actually suffered:
+$$\langle p_t, \hat\ell_t\rangle = \sum_i p_{t,i}\cdot\frac{\ell_{t,i}\mathbb{1}\{I_t=i\}}{p_{t,i}} = \ell_{t,I_t}$$
+- Exp3 also updates **every** round. The unplayed actions get an update of $0$, and that zero still matters, as explained below.
+
+## Common ideas
+
+1. **Both are exponential weights on cumulative loss.** The rule $p_{t,i} \propto e^{-\eta \cdot (\text{cumulative loss of } i)}$ is identical. Exp3 is literally Hedge run on a different loss sequence, $\hat\ell$ in place of $\ell$.
+2. **Both are "follow the leader, but softened".** Pure follow-the-leader would put all weight on the current best action, and an adversary can exploit that. The exponential smooths it, and $\eta$ controls how sharp it is.
+3. **Both rely on a ledger.** Neither algorithm models the world. Each just keeps a running score per action and converts scores into probabilities.
+4. **Both are analysed with the same potential-function argument.** Each has a "learning" term $\ln K/\eta$ and a "stability" term proportional to $\eta$.
+
+## Where they differ (beyond full vs. partial)
+
+**1. Exact ledger vs. noisy ledger**
+
+In Hedge, $L_{t,i}$ is the true cumulative loss. In Exp3, $\hat L_{t,i}$ is a random quantity that is correct only in expectation. In your 4-step run, $\hat L_4=(2.07, 3.31, 0.66)$ against true losses of $(1.8, 1.8, 2.4)$. Hedge never ranks an action wrongly because of bad luck, but Exp3 can.
+
+**2. Your actions change what you learn**
+
+In Hedge, $p_t$ affects only your own loss, not your information. In Exp3 there is a feedback loop:
+
+$$p_t \to \text{what you sample} \to \hat\ell_t \to \hat L_t \to p_{t+1}$$
+
+This is the exploration vs. exploitation tension. If $p_{t,i}$ is small you rarely see action $i$, so you learn about it slowly. Hedge has no such tension.
+
+**3. Not being observed acts like optimism**
+
+Losses are nonnegative, so $\hat L$ never decreases. An unplayed action's score stays frozen while the played action's score rises. Relative to the others, the frozen action looks better and its probability climbs back up. This works as built-in exploration: no news about an action is treated as good news. It is what stops a neglected action from being permanently abandoned.
+
+**4. Jumps are uneven in size and timing**
+
+Hedge makes small, steady updates to every action. Exp3 makes rare, large updates to one action, of size $\ell/p$. Both have the same expected total. Hedge's path is smooth, while Exp3's is jerky, and that jerkiness is variance.
+
+**5. The stability term, which is where $\sqrt K$ comes from**
+
+The regret analysis has a term of the form
+
+$$\eta \sum_t \mathbb{E}\Big[\textstyle\sum_i p_{t,i}\,(\text{loss used})_{t,i}^2\Big]$$
+
+| | Hedge | Exp3 |
+|---|---|---|
+| Loss used | $\ell_{t,i}\le 1$ | $\hat\ell_{t,i}$ |
+| Per-round term | $\sum_i p_{t,i}\ell_{t,i}^2 \le 1$ | $\sum_i p_{t,i}\cdot\frac{\ell_{t,i}^2}{p_{t,i}} \le K$ |
+| Best $\eta$ | $\sqrt{\ln K/T}$ | $\sqrt{\ln K/(TK)}$ |
+| Regret | $\sqrt{T\ln K}$ | $\sqrt{TK\ln K}$ |
+
+The importance weight $1/p$ exactly cancels the $p$ in front of it, so each action contributes $1$ and the $K$ actions sum to $K$. That is the entire $\sqrt K$ penalty. Because the noise is larger, Exp3 must also learn more slowly (smaller $\eta$) to stay stable.
+
+**6. Guarantees hold in a weaker sense**
+
+Hedge's regret bound is for the sequence you actually saw. Exp3's basic bound is in expectation over its own sampling. Getting a high-probability bound needs variants (Exp3-IX, Exp3.P), because a single unlucky tiny-$p$ draw can produce a huge $\hat\ell$.
+
+## One-line intuition
+
+Hedge keeps a **bank statement** that is exact and updated for every action each round. Exp3 keeps an **estimated statement**, updated only where it looked, with each observation inflated by $1/p$ so that the totals are right on average. The decision rule is the same, but the quality of the numbers going into it is different. Almost everything else (smaller $\eta$, the $K$ factor, the need for exploration, the variance fixes) follows from that.
