@@ -123,3 +123,120 @@ Common variants that address this:
 | Regret | $O(\sqrt{T \ln K})$ | $O(\sqrt{T K \ln K})$ |
 
 > **Takeaway:** Hedge decides *how to weight* actions based on losses, and importance reweighting supplies *unbiased losses* when you can only observe the actions you sampled.
+
+
+----
+
+# Worked Example: Exp3 with $K=3$ actions over 4 rounds
+
+## Setup
+
+- Actions: $i \in \{1,2,3\}$, learning rate $\eta = 0.5$, initial $\hat L_{0} = (0,0,0)$.
+- The adversary's true losses are below. The learner never sees the full rows, only the entry for the action it plays.
+- The sampled actions $I_t$ are fixed in advance, as if they came from the random draws.
+
+| $t$ | $\ell_{t,1}$ | $\ell_{t,2}$ | $\ell_{t,3}$ | sampled $I_t$ |
+|---|---|---|---|---|
+| 1 | 0.2 | 0.8 | 0.5 | 2 |
+| 2 | 0.9 | 0.1 | 0.6 | 1 |
+| 3 | 0.3 | 0.7 | 0.4 | 3 |
+| 4 | 0.4 | 0.2 | 0.9 | 2 |
+
+True cumulative losses: $(1.8,\ 1.8,\ 2.4)$, so the best fixed action has loss $1.8$.
+
+**Each round:**
+
+1. $p_{t,i} = \dfrac{e^{-\eta \hat L_{t-1,i}}}{\sum_j e^{-\eta \hat L_{t-1,j}}}$
+2. Sample $I_t$ and observe $\ell_{t,I_t}$.
+3. $\hat\ell_{t,i} = \dfrac{\ell_{t,i}\mathbb{1}\{I_t=i\}}{p_{t,i}}$, so only the played coordinate is nonzero.
+4. $\hat L_t = \hat L_{t-1} + \hat\ell_t$.
+
+---
+
+## Round 1
+
+$\hat L_0 = (0,0,0)$, so all weights are $e^0 = 1$:
+
+$$p_1 = \left(\tfrac13,\ \tfrac13,\ \tfrac13\right)$$
+
+- Sampled $I_1 = 2$, observed $\ell_{1,2} = 0.8$. Learner loss: **0.8**.
+- Estimate:
+$$\hat\ell_{1,2} = \frac{0.8}{1/3} = 2.4, \qquad \hat\ell_1 = (0,\ 2.4,\ 0)$$
+- Update: $\hat L_1 = (0,\ 2.4,\ 0)$.
+
+## Round 2
+
+Weights $e^{-0.5\hat L_{1,i}}$:
+
+$$(e^{0},\ e^{-1.2},\ e^{0}) = (1,\ 0.3012,\ 1), \qquad \text{sum} = 2.3012$$
+
+$$p_2 = \left(\tfrac{1}{2.3012},\ \tfrac{0.3012}{2.3012},\ \tfrac{1}{2.3012}\right) = (0.4346,\ 0.1309,\ 0.4346)$$
+
+Action 2 was penalised and is now down-weighted.
+
+- Sampled $I_2 = 1$, observed $\ell_{2,1} = 0.9$. Learner loss: **0.9**.
+- Estimate:
+$$\hat\ell_{2,1} = \frac{0.9}{0.4346} = 2.071, \qquad \hat\ell_2 = (2.071,\ 0,\ 0)$$
+- Update: $\hat L_2 = (2.071,\ 2.4,\ 0)$.
+
+**Unbiasedness check at this round:**
+
+$$\mathbb{E}[\hat\ell_{2,1}] = 0.4346 \cdot \tfrac{0.9}{0.4346} = 0.9 = \ell_{2,1} \checkmark$$
+
+$$\mathbb{E}[\hat\ell_{2,2}] = 0.1309 \cdot \tfrac{0.1}{0.1309} = 0.1 = \ell_{2,2} \checkmark$$
+
+$$\mathbb{E}[\hat\ell_{2,3}] = 0.4346 \cdot \tfrac{0.6}{0.4346} = 0.6 = \ell_{2,3} \checkmark$$
+
+This holds on average over the draw of $I_2$. In any single round the estimate is wrong, because two of its three coordinates are 0.
+
+## Round 3
+
+Weights $e^{-0.5\hat L_{2,i}}$:
+
+$$(e^{-1.0355},\ e^{-1.2},\ e^{0}) = (0.3550,\ 0.3012,\ 1), \qquad \text{sum} = 1.6562$$
+
+$$p_3 = (0.2144,\ 0.1819,\ 0.6038)$$
+
+Action 3 has never been charged, so it now holds most of the probability.
+
+- Sampled $I_3 = 3$, observed $\ell_{3,3} = 0.4$. Learner loss: **0.4**.
+- Estimate:
+$$\hat\ell_{3,3} = \frac{0.4}{0.6038} = 0.6625, \qquad \hat\ell_3 = (0,\ 0,\ 0.6625)$$
+- Update: $\hat L_3 = (2.071,\ 2.4,\ 0.6625)$.
+
+## Round 4
+
+Weights $e^{-0.5\hat L_{3,i}}$:
+
+$$(e^{-1.0355},\ e^{-1.2},\ e^{-0.3313}) = (0.3550,\ 0.3012,\ 0.7180), \qquad \text{sum} = 1.3743$$
+
+$$p_4 = (0.2583,\ 0.2192,\ 0.5225)$$
+
+- Sampled $I_4 = 2$, observed $\ell_{4,2} = 0.2$. Learner loss: **0.2**.
+- Estimate:
+$$\hat\ell_{4,2} = \frac{0.2}{0.2192} = 0.9125, \qquad \hat\ell_4 = (0,\ 0.9125,\ 0)$$
+- Update: $\hat L_4 = (2.071,\ 3.3125,\ 0.6625)$.
+
+---
+
+## Summary of the run
+
+| $t$ | $p_t$ | $I_t$ | observed loss | $\hat\ell_t$ |
+|---|---|---|---|---|
+| 1 | (0.333, 0.333, 0.333) | 2 | 0.8 | (0, 2.400, 0) |
+| 2 | (0.435, 0.131, 0.435) | 1 | 0.9 | (2.071, 0, 0) |
+| 3 | (0.214, 0.182, 0.604) | 3 | 0.4 | (0, 0, 0.663) |
+| 4 | (0.258, 0.219, 0.522) | 2 | 0.2 | (0, 0.913, 0) |
+
+**Regret on this run:**
+
+$$R_4 = (0.8 + 0.9 + 0.4 + 0.2) - \min(1.8,\ 1.8,\ 2.4) = 2.3 - 1.8 = 0.5$$
+
+## What this example shows
+
+1. **Only one coordinate updates per round.** The importance weight $1/p_{t,I_t}$ scales that one observation up, so each round carries more information about the played action.
+2. **A low-probability action gets a bigger jump when sampled.** In round 1 the loss $0.8$ became $2.4$ because $p = 1/3$. If $p$ had been $0.05$, it would have become $16$. This is the variance problem.
+3. **A single run is noisy.** After 4 rounds $\hat L_4 = (2.07,\ 3.31,\ 0.66)$, while the true cumulative losses are $(1.8,\ 1.8,\ 2.4)$. The estimates only match the truth on average over many runs. Action 3 looks best because it was sampled once and never penalised, even though it is actually the worst.
+4. **Hedge would behave differently.** With full information it would have seen all three losses each round, and $L_4 = (1.8, 1.8, 2.4)$ would have pushed weight away from action 3 immediately.
+
+If you'd like, I can append this example to the GitHub `.md` file, or rerun it with a different $\eta$ or different sampled actions.
