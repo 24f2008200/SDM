@@ -41,7 +41,7 @@
 | **Regret** | $R_T=\mathbb E\big[\sum_t\ell_{t,I_t}\big]-\min_i\sum_t\ell_{t,i}$ (expected, vs best fixed arm, including arms we never played) |
 | **Key trick** | Build an **importance-weighted loss estimate** $\hat\ell_{t,i}=\dfrac{\ell_{t,i}}{p_{t,i}}\mathbf 1[I_t=i]$: zero everywhere except the played arm. It is **unbiased**: $\mathbb E[\hat\ell_t\mid p_t]=\ell_t$ |
 | **EXP3** | Run **Hedge on $\hat\ell_t$**: $w_{t+1,i}=w_{t,i}e^{-\eta\hat\ell_{t,i}}$, $p_t=w_t/\sum_jw_{t,j}$ |
-| **Obstacle** | $\hat\ell_t$ is unbounded ($1/p_{t,i}$ can be huge), so Hedge's "$\|\ell\|_2^2 \le d$" step fails |
+| **Obstacle** | $\hat\ell_t$ is unbounded ($1/p_{t,i}$ can be huge), so Hedge's $\|\ell\|_2^2 \le d$ step fails |
 | **Fix** | Don't bound $p$ away: $\mathbb E\big[\langle p_t,\hat\ell_t^2\rangle\big]=\sum_i\ell_{t,i}^2\le d$ (the $p$'s cancel) |
 | **Result** | $R_T\le\dfrac{\ln d}{\eta}+\dfrac{\eta Td}{2}$; $\eta^*=\sqrt{\dfrac{2\ln d}{Td}}$; $\ \mathbf{R_T\le\sqrt{2\,T\,d\,\ln d}}=O(\sqrt{Td\ln d})$ |
 | **Cost vs Hedge** | Extra factor $\sqrt d$ (and a learning rate $\sqrt d$ times smaller): you can't trust an estimate as much as the truth |
